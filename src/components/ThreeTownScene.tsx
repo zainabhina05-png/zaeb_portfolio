@@ -770,6 +770,8 @@ export default function ThreeTownScene({
     };
   }, []);
 
+  const currentThemeConfig = GAME_THEMES.find((t) => t.id === gameTheme) || GAME_THEMES[0];
+
   return (
     <div className="relative w-full h-full min-h-[500px] overflow-hidden select-none bg-slate-950 font-sans">
       {/* 3D CANVAS MOUNT */}
