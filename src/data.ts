@@ -53,3 +53,9 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   }
 ];
 
+
+// Re-export everything from data folder
+export { PROJECT_PLACEHOLDERS } from "./data/projects";
+export { EXPERIENCE_PLACEHOLDERS, LEADERSHIP_PLACEHOLDERS } from "./data/experience";
+export { EDUCATION_PLACEHOLDERS } from "./data/education";
+export { CERTIFICATION_PLACEHOLDERS } from "./data/certifications";

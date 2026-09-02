@@ -813,29 +813,6 @@ export default function ThreeTownScene({
           )}
         </div>
       </header>
-            onClick={() => setSoundEnabled(!soundEnabled)}
-            className={`p-2.5 rounded-2xl ${currentThemeConfig.bgGlass} border ${currentThemeConfig.borderClass} text-zinc-200 hover:text-white cursor-pointer shadow-lg backdrop-blur-md transition-all`}
-            title="Toggle Audio Effects"
-          >
-            {soundEnabled ? <Volume2 className="w-4 h-4 text-emerald-400" /> : <VolumeX className="w-4 h-4 text-zinc-400" />}
-          </button>
-
-          {/* Exit 3D */}
-          {(onExit3D || onSwitchToScrollMode) && (
-            <button
-              onClick={() => {
-                if (onExit3D) onExit3D();
-                else if (onSwitchToScrollMode) onSwitchToScrollMode();
-              }}
-              className={`px-3.5 py-2 rounded-2xl ${currentThemeConfig.bgGlass} border ${currentThemeConfig.borderClass} text-zinc-100 hover:border-sky-400 hover:text-sky-300 font-mono text-xs font-bold cursor-pointer transition-all flex items-center gap-1.5 shadow-xl backdrop-blur-md`}
-              title="Return to Storybook 2D Codex"
-            >
-              <X className="w-3.5 h-3.5" />
-              <span>Exit 3D</span>
-            </button>
-          )}
-        </div>
-      </header>
 
       {/* CLICK-TO-DRIVE DESTINATIONS BAR (Click ANY destination to drive there automatically!) */}
       <nav aria-label="Destinations Bar" className="absolute top-18 sm:top-16 left-3 right-3 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 z-20 pointer-events-none flex justify-center">

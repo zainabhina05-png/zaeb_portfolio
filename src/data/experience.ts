@@ -17,6 +17,7 @@ export const EXPERIENCE_PLACEHOLDERS: ExperienceItem[] = [
     descriptionPlaceholder: "Built, tested, and deployed full-stack production applications end-to-end. Developed Yalla, a live large-scale UAE-based e-commerce platform with reusable React components, REST API integrations, MongoDB schemas, and SSR/SSG with Next.js. The live storefront's real-user Interaction to Next Paint (INP) measures 68ms, well within Google's 200ms 'good' threshold.",
     technologies: ["React.js", "Next.js", "Node.js", "Express.js", "MongoDB", "REST APIs", "Tailwind CSS", "SSR/SSG"]
   }
+];
 
 export const LEADERSHIP_PLACEHOLDERS: LeadershipItem[] = [
   {

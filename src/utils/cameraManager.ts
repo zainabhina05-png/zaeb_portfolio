@@ -18,6 +18,21 @@ export const CAMERA_VIEWS: CameraViewConfig[] = [
     description: "Continuous revolving 360-degree camera capturing rainy reflections & spires.",
     icon: "Video",
   },
+  // Disabled for deployment - can be re-enabled later
+  // {
+  //   id: "first_person",
+  //   name: "Dashcam Cockpit",
+  //   shortLabel: "Dashcam",
+  //   description: "Driver's eye view over the handlebars looking down the rainy asphalt road.",
+  //   icon: "Eye",
+  // },
+  // {
+  //   id: "chase",
+  //   name: "3rd-Person Follow",
+  //   shortLabel: "Chase Cam",
+  //   description: "Dynamic chase camera trailing behind the scooter with smooth banking.",
+  //   icon: "Car",
+  // },
 ];
 
 /**
