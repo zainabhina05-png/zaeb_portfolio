@@ -1,71 +1,44 @@
 import type { ExperienceItem, LeadershipItem } from "../types";
 
-export const EXPERIENCE_ROW_1: ExperienceItem[] = [
+export const EXPERIENCE_PLACEHOLDERS: ExperienceItem[] = [
   {
     id: "exp-01",
-    rolePlaceholder: "Full-Stack MERN Engineer",
-    companyPlaceholder: "Tech Hub Innovation",
-    periodPlaceholder: "2024 — PRESENT",
-    descriptionPlaceholder: "Architected and delivered scalable production systems including live UAE client e-commerce platforms. Engineered high-throughput Express REST APIs, optimized complex MongoDB schemas, and integrated seamless payment & authentication workflows.",
-    technologies: ["React.js", "Node.js", "Express.js", "MongoDB Atlas", "REST APIs", "Tailwind CSS", "JWT", "Postman"]
+    rolePlaceholder: "Open Source Contributor",
+    companyPlaceholder: "Elite Coders: Summer of Code 2026",
+    periodPlaceholder: "2026 — PRESENT",
+    descriptionPlaceholder: "Ongoing contributor to a fast-moving open-source MERN codebase, merging 107+ pull requests that resolved production bugs, refactored legacy components, and strengthened React component architecture. Reviewed incoming pull requests for code quality and best practices, providing structured feedback to help contributors ship cleaner code.",
+    technologies: ["React.js", "Node.js", "MongoDB", "Git", "GitHub", "Code Review", "Agile/Scrum", "AI-Assisted Development"]
   },
   {
     id: "exp-02",
-    rolePlaceholder: "Frontend & Motion UI Engineer",
-    companyPlaceholder: "Tech Hub / Hyper Nexus",
+    rolePlaceholder: "MERN Stack Developer (Front-End Focus)",
+    companyPlaceholder: "Tech Hub Innovation, Faisalabad",
     periodPlaceholder: "2024",
-    descriptionPlaceholder: "Developed high-fidelity user interfaces for the Hypernexis.tech enterprise ecosystem. Built fluid GSAP micro-interactions, responsive design systems with Tailwind & SCSS, and optimized Web Vitals for sub-second page loads.",
-    technologies: ["React.js", "Next.js", "TypeScript", "GSAP", "Tailwind CSS", "SCSS", "JavaScript ES6+"]
-  },
-  {
-    id: "exp-03",
-    rolePlaceholder: "Interactive UI Systems & Component Labs",
-    companyPlaceholder: "Independent / UI Systems",
-    periodPlaceholder: "2024 — PRESENT",
-    descriptionPlaceholder: "Built atomic component design systems with strict accessibility, custom CSS variable token pipelines, state machine driven modal flows, and resilient client-side caching strategies for complex web apps.",
-    technologies: ["TypeScript", "Tailwind CSS", "XState", "Framer Motion", "Storybook", "Vite"]
+    descriptionPlaceholder: "Built, tested, and deployed full-stack production applications end-to-end. Developed Yalla, a live large-scale UAE-based e-commerce platform with reusable React components, REST API integrations, MongoDB schemas, and SSR/SSG with Next.js. The live storefront's real-user Interaction to Next Paint (INP) measures 68ms, well within Google's 200ms 'good' threshold.",
+    technologies: ["React.js", "Next.js", "Node.js", "Express.js", "MongoDB", "REST APIs", "Tailwind CSS", "SSR/SSG"]
   }
-];
-
-export const EXPERIENCE_ROW_2: ExperienceItem[] = [
-  {
-    id: "exp-04",
-    rolePlaceholder: "3D WebGL & Game Systems Architect",
-    companyPlaceholder: "Independent / Creative Engineering",
-    periodPlaceholder: "2024 — PRESENT",
-    descriptionPlaceholder: "Engineered browser-based 3D WebGL experiences (How_Ball 3D Runner) and C++ desktop game prototypes. Implemented custom GLSL vertex/fragment shaders, procedural level generation, collision physics engines, and local LLM AI agents via Ollama.",
-    technologies: ["C++", "Three.js", "React Three Fiber", "GLSL Shaders", "SFML", "Zustand", "Ollama / AI"]
-  },
-  {
-    id: "exp-05",
-    rolePlaceholder: "Data Infrastructure & Backend Systems",
-    companyPlaceholder: "Systems & Data Architecture",
-    periodPlaceholder: "2024",
-    descriptionPlaceholder: "Designed enterprise data pipelines (Logpose) migrating high-volume Snowflake analytical tables to Supabase / PostgreSQL. Implemented transaction pooling, automated schema mapping, Prisma ORM queries, and Dockerized microservice deployments.",
-    technologies: ["Node.js", "TypeScript", "PostgreSQL", "Snowflake", "Supabase", "Prisma", "Docker", "CI/CD"]
-  },
-  {
-    id: "exp-06",
-    rolePlaceholder: "Open Source Contributor & Dev Community",
-    companyPlaceholder: "Build In Public / Global Open Source",
-    periodPlaceholder: "2024 — PRESENT",
-    descriptionPlaceholder: "Active contributor to open-source codebases (WorkSphere, CampusConnect, LinkID) with merged PRs covering webhook engines, rate limiters, offline sync retries, and WebAuthn security. Mentoring aspiring Pakistani software engineers.",
-    technologies: ["Git", "GitHub Actions", "WebSockets", "WebAuthn", "Vitest", "Jest", "Agile / Scrum"]
-  }
-];
-
-export const EXPERIENCE_PLACEHOLDERS: ExperienceItem[] = [
-  ...EXPERIENCE_ROW_1,
-  ...EXPERIENCE_ROW_2,
-];
 
 export const LEADERSHIP_PLACEHOLDERS: LeadershipItem[] = [
   {
     id: "lead-01",
-    rolePlaceholder: "Tech Community & Open Source Developer",
-    organizationPlaceholder: "Build In Public / Open Source",
-    periodPlaceholder: "2024 — PRESENT",
-    descriptionPlaceholder: "Actively building and documenting projects in public across GitHub and LinkedIn. Sharing 3D web graphics, game engine architecture insights, and helping fellow Pakistani CS students get started with modern stacks."
+    rolePlaceholder: "Community Influencer",
+    organizationPlaceholder: "Microsoft Student Ambassador Program",
+    periodPlaceholder: "2026 — PRESENT",
+    descriptionPlaceholder: "Contribute through technical content creation, event promotion, and campus outreach, communicating technical concepts clearly to a broad student audience."
+  },
+  {
+    id: "lead-02",
+    rolePlaceholder: "Campus Ambassador",
+    organizationPlaceholder: "National Incubation Center Faisalabad (NICF)",
+    periodPlaceholder: "2026 — PRESENT",
+    descriptionPlaceholder: "Selected as Campus Ambassador for NICF's ambassador team, representing the incubation center's programs and initiatives on campus."
+  },
+  {
+    id: "lead-03",
+    rolePlaceholder: "Member of Cohort",
+    organizationPlaceholder: "Summer Upskill Series, AtomCamp × GDG on Campus (IM Sciences)",
+    periodPlaceholder: "2026",
+    descriptionPlaceholder: "Completed a multi-track upskilling program covering personal profile/brand building, web development, LinkedIn optimization, freelancing fundamentals, agentic AI workflows, and AI image generation."
   }
 ];
 

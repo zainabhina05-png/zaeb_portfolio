@@ -59,10 +59,11 @@ export default function Resume() {
     setDownloadState("loading");
     setTimeout(() => {
       setDownloadState("success");
-      // Trigger actual download or view
+      // Trigger actual resume PDF download
       const link = document.createElement("a");
-      link.href = "#";
+      link.href = "/Zainab_Naeem_Resume.pdf"; // Place your resume PDF in the public folder
       link.setAttribute("download", "Zainab_Naeem_Resume.pdf");
+      link.setAttribute("target", "_blank");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
