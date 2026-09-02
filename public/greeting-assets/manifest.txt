@@ -1,0 +1,6 @@
+{'source': 'zaeb1.png', 'output': 'zaeb-standing.png', 'size': (756, 900), 'alpha_bbox': (0, 0, 756, 900), 'bytes_png': 606216, 'bytes_webp': 374318}
+{'source': 'zaeb2.png', 'output': 'zaeb-step-a.png', 'size': (900, 861), 'alpha_bbox': (0, 0, 900, 861), 'bytes_png': 605503, 'bytes_webp': 368142}
+{'source': 'zaeb3.png', 'output': 'zaeb-step-b.png', 'size': (900, 861), 'alpha_bbox': (0, 0, 900, 861), 'bytes_png': 612012, 'bytes_webp': 374166}
+{'source': 'zaeb4.png', 'output': 'zaeb-scooter.png', 'size': (820, 900), 'alpha_bbox': (0, 0, 820, 900), 'bytes_png': 559638, 'bytes_webp': 329000}
+{'source': 'zaeb5.png', 'output': 'zaeb-scooter-motion.png', 'size': (820, 900), 'alpha_bbox': (0, 0, 820, 900), 'bytes_png': 612589, 'bytes_webp': 366952}
+{'source': 'Gemini_Generated_Image_gm9ti6gm9ti6gm9t.png', 'output': 'zaeb-ring.png', 'size': (781, 900), 'alpha_bbox': (0, 0, 781, 900), 'bytes_png': 654479, 'bytes_webp': 386240}

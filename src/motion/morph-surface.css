@@ -1,0 +1,22 @@
+.morph-surface {
+  position: relative;
+  z-index: 1;
+}
+
+[data-morph-surface],
+[data-morph] {
+  will-change: clip-path, opacity;
+  clip-path: polygon(0 2%, 98% 0, 100% 97%, 96% 100%, 3% 98%, 0 5%);
+}
+
+[data-morph-surface] {
+  overflow: clip;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-morph-surface],
+  [data-morph] {
+    clip-path: polygon(0 2%, 98% 0, 100% 97%, 96% 100%, 3% 98%, 0 5%);
+    will-change: opacity;
+  }
+}

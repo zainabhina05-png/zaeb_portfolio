@@ -1,0 +1,101 @@
+/* Reference-matched global cursor: outlined arrow at rest, outlined star only on click. */
+:root:has(.portfolio-cursor),
+:root:has(.portfolio-cursor) * {
+  cursor: none !important;
+}
+
+.portfolio-cursor {
+  position: fixed;
+  z-index: 2147483647;
+  top: 0;
+  left: 0;
+  width: 54px;
+  height: 62px;
+  pointer-events: none;
+  transform: translate3d(-120px, -120px, 0);
+  will-change: transform;
+}
+
+.portfolio-cursor-arrow,
+.portfolio-cursor-star {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.portfolio-cursor-arrow {
+  top: -3px;
+  left: -2px;
+  width: 42px;
+  height: auto;
+  filter: drop-shadow(0 0 3px rgba(255, 253, 249, 0.55));
+  transform-origin: 23% 15%;
+  transition: transform 140ms cubic-bezier(0.16, 1, 0.3, 1), filter 140ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolio-cursor-star {
+  top: 20px;
+  left: 23px;
+  width: 30px;
+  height: 30px;
+  opacity: 0;
+  filter: drop-shadow(0 0 4px rgba(255, 253, 249, 0.7));
+  transform: scale(0.42) rotate(-14deg);
+  transform-origin: center;
+}
+
+.portfolio-cursor.is-clicking .portfolio-cursor-arrow {
+  transform: scale(0.93) rotate(-2deg);
+  filter: drop-shadow(0 0 5px rgba(255, 253, 249, 0.82));
+}
+
+.portfolio-cursor.is-clicking .portfolio-cursor-star {
+  animation: portfolio-cursor-star-pop 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes portfolio-cursor-star-pop {
+  0% { opacity: 0; transform: scale(0.38) rotate(-16deg); }
+  34% { opacity: 1; transform: scale(0.94) rotate(4deg); }
+  100% { opacity: 0; transform: scale(1.18) rotate(16deg); }
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .portfolio-cursor { display: none; }
+  :root:has(.portfolio-cursor),
+  :root:has(.portfolio-cursor) * { cursor: auto !important; }
+}
+
+/* cursor-greeting-polish-v2: three focused corrections only. */
+
+/* Smaller, faster click star with a tighter position beneath the outlined arrow. */
+.portfolio-cursor-star {
+  top: 21px;
+  left: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.portfolio-cursor.is-clicking .portfolio-cursor-star {
+  animation: portfolio-cursor-star-pop 230ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes portfolio-cursor-star-pop {
+  0% { opacity: 0; transform: scale(0.32) rotate(-14deg); }
+  38% { opacity: 1; transform: scale(0.82) rotate(3deg); }
+  100% { opacity: 0; transform: scale(1.02) rotate(12deg); }
+}
+
+/* cursor-eb-balance-v1: keep the current click star intact; refine only EB tracking and arrow scale. */
+@media (prefers-reduced-motion: no-preference) {
+  .zaeb-greeting .zaeb-greeting-word-right {
+    display: inline-block !important;
+    letter-spacing: 0.045em !important;
+  }
+}
+
+/* Arrow only: 42px → 38px. The 24px click-star size and 230ms animation remain unchanged. */
+.portfolio-cursor-arrow {
+  width: 38px;
+}

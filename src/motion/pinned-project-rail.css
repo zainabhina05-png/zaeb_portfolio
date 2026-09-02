@@ -1,0 +1,35 @@
+.pinned-project-rail {
+  position: relative;
+  z-index: 2;
+}
+
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .pinned-project-rail[data-pinned-rail] {
+    min-height: 240svh;
+  }
+
+  .pinned-project-rail[data-pinned-rail] .pinned-project-rail__sticky {
+    position: sticky;
+    top: 0;
+    display: grid;
+    min-height: 100svh;
+    overflow: clip;
+    align-items: center;
+  }
+
+  .pinned-project-rail[data-pinned-rail] .pinned-project-rail__track {
+    width: 118vw;
+    padding-right: 18vw;
+    will-change: transform;
+  }
+
+  .pinned-project-rail[data-pinned-rail] #projects {
+    min-height: 100svh !important;
+  }
+}
+
+@media (max-width: 899px), (prefers-reduced-motion: reduce) {
+  .pinned-project-rail__track {
+    transform: none !important;
+  }
+}

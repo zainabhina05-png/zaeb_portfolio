@@ -1,0 +1,952 @@
+:root {
+  --about-bg: #3a2e28;
+  --about-bg-deep: #1e1b20;
+  --about-accent: #4a1420;
+  --about-text: #ede6dd;
+  --about-tungsten: #9c9187;
+  --about-tungsten-border: rgba(156, 145, 135, 0.52);
+  --about-ease: cubic-bezier(0.52, 0.01, 0, 1);
+}
+
+.zaeb-about {
+  position: relative;
+  isolation: isolate;
+  min-height: 122svh;
+  overflow: hidden;
+  color: var(--about-text);
+  background: var(--about-bg);
+  clip-path: inset(0 var(--about-curtain-inset, 50%) 0 var(--about-curtain-inset, 50%));
+  transition: clip-path 60ms linear;
+}
+.zaeb-about-depth { position: absolute; inset: -5%; z-index: -1; background: radial-gradient(ellipse at 52% 42%, rgba(112, 74, 63, 0.32), transparent 32%), radial-gradient(ellipse at 18% 84%, rgba(74, 20, 32, 0.35), transparent 35%), linear-gradient(145deg, #3a2e28 0%, #30262a 50%, #241e24 100%); transform: scale(calc(1.05 - (var(--about-progress, 0) * 0.05))); transform-origin: center; transition: transform 100ms linear; }
+.zaeb-about-shell { position: relative; width: min(100% - 2.4rem, 82rem); min-height: 122svh; margin: 0 auto; padding: clamp(7rem, 14vh, 10rem) 0 clamp(4rem, 9vh, 7rem); }
+.zaeb-about-eyebrow, .zaeb-about-cell-index, .zaeb-about-cell-title, .zaeb-about-footer-line, .zaeb-about-cell-tags { font-family: var(--font-mono), "JetBrains Mono", monospace; text-transform: uppercase; }
+.zaeb-about-eyebrow { margin: 0 0 2.6rem; color: rgba(237, 230, 221, 0.58); font-size: 0.62rem; letter-spacing: 0.16em; }
+.zaeb-about-badge-wrap { display: grid; min-height: 4.6rem; place-items: center; margin-bottom: clamp(1.3rem, 3vw, 2.2rem); }
+.zaeb-about-badge { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 2.7rem; padding: 0.64rem 1.2rem; overflow: visible; border: 1px solid rgba(156, 145, 135, 0.72); border-radius: 999px; background: var(--about-accent); color: var(--about-text); font-family: var(--font-mono), "JetBrains Mono", monospace; font-size: 0.68rem; letter-spacing: 0.14em; opacity: 0; transform: translateY(-7.5rem) scale(0.8); transform-origin: 50% 0; transition: transform 180ms ease-out; }
+.zaeb-about.is-badge-ready .zaeb-about-badge { animation: about-badge-drop 860ms cubic-bezier(0.22, 1.45, 0.36, 1) both; }
+.zaeb-about-badge.is-tilting { transform: perspective(800px) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry)) scale(1.02); transition: transform 90ms ease-out; }
+.zaeb-about-badge-glare, .zaeb-about-cell-glare { position: absolute; inset: 0; pointer-events: none; border-radius: inherit; opacity: 0; background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(237, 230, 221, 0.16), transparent 55%); mix-blend-mode: overlay; transition: opacity 180ms ease; }
+.zaeb-about-badge.is-tilting .zaeb-about-badge-glare, .zaeb-about-cell.is-tilting .zaeb-about-cell-glare { opacity: 1; }
+.zaeb-about-badge-impact { position: absolute; inset: -0.65rem; z-index: -1; border: 1px solid rgba(74, 20, 32, 0.7); border-radius: inherit; opacity: 0; transform: scale(0.78); pointer-events: none; }
+.zaeb-about.is-badge-ready .zaeb-about-badge-impact { animation: about-badge-impact 720ms ease-out 720ms both; }
+.zaeb-about-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(8.6rem, 1fr)); grid-template-areas: "about about frontend backend" "about about languages testing" "about about game game"; gap: 0.75rem; width: 100%; min-height: 30rem; }
+.zaeb-about-cell { position: relative; min-width: 0; min-height: 9.5rem; cursor: pointer; overflow: hidden; border: 1px solid var(--about-tungsten-border); border-radius: 0.5rem; background: var(--about-bg-deep); opacity: 0; transform: translateY(1.25rem) scale(0.9); transform-origin: 50% 0; transition: opacity 420ms ease var(--cell-delay), transform 560ms var(--about-ease), border-color 180ms ease, filter 260ms ease; }
+.zaeb-about.is-grid-ready .zaeb-about-cell.is-visible { opacity: 1; transform: perspective(800px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(1); }
+.zaeb-about-cell.is-tilting { transform: perspective(800px) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry)) scale(1.02) !important; border-color: var(--about-accent); transition: transform 90ms ease-out, border-color 180ms ease; }
+.zaeb-about-cell:hover, .zaeb-about-cell:focus-visible { border-color: var(--about-accent); outline: none; }
+.zaeb-about-cell.is-dimmed { opacity: 0.34 !important; filter: saturate(0.52); }
+.zaeb-about-cell.is-expanded { z-index: 5; min-height: 20rem; cursor: default; border-color: var(--about-accent); box-shadow: inset 0 0 0 1px rgba(74, 20, 32, 0.42); transform: perspective(800px) rotateX(0) rotateY(0) scale(1.01) !important; transition: min-height 800ms var(--about-ease), transform 800ms var(--about-ease), border-color 180ms ease; }
+.zaeb-about-cell-inner { position: relative; display: flex; min-height: 100%; flex-direction: column; padding: 1.05rem; }
+.zaeb-about-cell-index { color: rgba(156, 145, 135, 0.62); font-size: 0.58rem; letter-spacing: 0.14em; }
+.zaeb-about-cell-title { margin: 1.05rem 0 0.65rem; color: var(--about-tungsten); font-size: 0.67rem; letter-spacing: 0.09em; }
+.zaeb-about-cell-summary { max-width: 38rem; margin: 0; color: var(--about-text); font-size: clamp(0.86rem, 1.2vw, 1.1rem); line-height: 1.48; }
+.zaeb-about-cell-about .zaeb-about-cell-summary { max-width: 28rem; font-size: clamp(1.05rem, 1.65vw, 1.45rem); line-height: 1.25; }
+.zaeb-about-cell.is-expanded .zaeb-about-cell-summary { max-width: 44rem; padding-top: 1.5rem; font-size: clamp(1rem, 1.5vw, 1.25rem); line-height: 1.65; animation: about-expanded-copy 420ms ease 420ms both; }
+.zaeb-about-cell-tags { display: flex; flex-wrap: wrap; gap: 0.42rem; margin-top: auto; padding-top: 1.4rem; color: rgba(237, 230, 221, 0.72); font-size: 0.56rem; letter-spacing: 0.06em; }
+.zaeb-about-cell-tags span { padding: 0.3rem 0.42rem; border: 1px solid rgba(156, 145, 135, 0.4); }
+.zaeb-about-cell-close { position: absolute; top: 0.72rem; right: 0.72rem; display: grid; width: 1.8rem; height: 1.8rem; place-items: center; border: 1px solid rgba(156, 145, 135, 0.48); border-radius: 50%; background: transparent; color: var(--about-text); cursor: pointer; }
+.zaeb-about-cell-close:hover, .zaeb-about-cell-close:focus-visible { border-color: var(--about-text); outline: none; }
+.zaeb-about-cell-crosshair { position: absolute; top: 0; left: 50%; width: 1.25rem; height: 1.25rem; margin: -0.625rem 0 0 -0.625rem; opacity: 0; transform: scale(0.65); transition: opacity 260ms ease, transform 420ms var(--about-ease); pointer-events: none; }
+.zaeb-about-cell-crosshair.is-settled { opacity: 1; transform: scale(1); }
+.zaeb-about-cell-crosshair b:first-child, .zaeb-about-cell-crosshair b:last-child { position: absolute; display: block; border-color: rgba(156, 145, 135, 0.58); border-style: dashed; }
+.zaeb-about-cell-crosshair b:first-child { top: 50%; right: 0; left: 0; border-top-width: 1px; }
+.zaeb-about-cell-crosshair b:last-child { top: 0; bottom: 0; left: 50%; border-left-width: 1px; }
+.zaeb-about-hover-dot { position: absolute; top: 0.9rem; right: 0.9rem; width: 0.38rem; height: 0.38rem; border-radius: 50%; background: var(--about-tungsten); opacity: 0.32; transition: opacity 180ms ease, transform 220ms var(--about-ease), box-shadow 220ms ease; }
+.zaeb-about-cell:hover .zaeb-about-hover-dot, .zaeb-about-cell:focus-visible .zaeb-about-hover-dot, .zaeb-about-cell.is-tilting .zaeb-about-hover-dot { opacity: 1; transform: scale(1.6); box-shadow: 0 0 0.75rem rgba(237, 230, 221, 0.42); }
+.zaeb-about-footer-line { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; padding-top: 0.9rem; border-top: 1px dashed rgba(156, 145, 135, 0.45); color: rgba(237, 230, 221, 0.56); font-size: 0.55rem; letter-spacing: 0.1em; }
+.zaeb-about-next-cue { display: inline-flex; align-items: center; gap: 0.4rem; color: rgba(237, 230, 221, 0.72); }
+@keyframes about-badge-drop { 0% { opacity: 0; transform: translateY(-7.5rem) scale(0.8); } 62% { opacity: 1; transform: translateY(0.38rem) scale(1.05); } 78% { opacity: 1; transform: translateY(-0.18rem) scale(0.985); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes about-badge-impact { 0% { opacity: 0.68; transform: scale(0.78); } 100% { opacity: 0; transform: scale(1.18); } }
+@keyframes about-expanded-copy { from { opacity: 0; transform: translateY(0.35rem); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 760px) { .zaeb-about { min-height: 150svh; } .zaeb-about-shell { width: min(100% - 1.25rem, 38rem); min-height: 150svh; padding-top: 6rem; } .zaeb-about-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(5, minmax(8rem, auto)); grid-template-areas: "about about" "about about" "frontend backend" "languages testing" "game game"; min-height: 42rem; } .zaeb-about-cell { min-height: 8rem; } .zaeb-about-cell.is-expanded { grid-area: 1 / 1 / 3 / 3 !important; min-height: 18rem; } .zaeb-about-cell-about .zaeb-about-cell-summary { font-size: 1.05rem; } .zaeb-about-footer-line { flex-direction: column; line-height: 1.65; } }
+@media (max-width: 460px) { .zaeb-about-eyebrow { margin-bottom: 1.5rem; } .zaeb-about-badge { max-width: 100%; font-size: 0.57rem; letter-spacing: 0.1em; } .zaeb-about-grid { gap: 0.55rem; } .zaeb-about-cell-inner { padding: 0.8rem; } .zaeb-about-cell-title { margin-top: 0.7rem; font-size: 0.59rem; } .zaeb-about-cell-summary { font-size: 0.78rem; } .zaeb-about-cell-about .zaeb-about-cell-summary { font-size: 0.96rem; } }
+@media (prefers-reduced-motion: reduce) { .zaeb-about { clip-path: inset(0); transition: none; } .zaeb-about-depth { transform: none; transition: none; } .zaeb-about-badge, .zaeb-about.is-badge-ready .zaeb-about-badge, .zaeb-about.is-badge-ready .zaeb-about-badge-impact { animation: none; opacity: 1; transform: none; } .zaeb-about-cell, .zaeb-about.is-grid-ready .zaeb-about-cell.is-visible, .zaeb-about-cell.is-tilting, .zaeb-about-cell.is-expanded { transform: none !important; transition: opacity 180ms ease, border-color 180ms ease; } }
+
+
+/* about-constellation-fade-v1: supplied field image with a restrained translucent veil. */
+.zaeb-about {
+  background: #030304 url("/about-bg/constellation-field.webp") center / cover no-repeat;
+}
+.zaeb-about::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(3, 3, 4, 0.64) 0%, rgba(3, 3, 4, 0.38) 38%, rgba(3, 3, 4, 0.7) 100%),
+    linear-gradient(90deg, rgba(3, 3, 4, 0.24), rgba(45, 23, 30, 0.08) 52%, rgba(3, 3, 4, 0.38));
+  opacity: 0.92;
+}
+.zaeb-about-depth {
+  z-index: -1;
+  opacity: 0.62;
+  background: radial-gradient(ellipse at 55% 44%, rgba(120, 72, 70, 0.18), transparent 34%), linear-gradient(145deg, rgba(32, 15, 21, 0.54), rgba(5, 5, 7, 0.42));
+  mix-blend-mode: multiply;
+}
+.zaeb-about-shell { z-index: 1; }
+.zaeb-about-badge-wrap { position: relative; z-index: 2; }
+.zaeb-about.is-badge-ready .zaeb-about-badge {
+  animation: about-badge-drop 1180ms cubic-bezier(0.2, 1.48, 0.32, 1) 80ms both;
+}
+.zaeb-about.is-badge-ready .zaeb-about-badge::after {
+  position: absolute;
+  inset: -0.9rem;
+  border: 1px solid rgba(237, 230, 221, 0.24);
+  border-radius: inherit;
+  content: "";
+  opacity: 0;
+  transform: scale(0.8);
+  animation: about-badge-ring 760ms ease-out 760ms both;
+  pointer-events: none;
+}
+@keyframes about-badge-ring {
+  0% { opacity: 0.58; transform: scale(0.8); }
+  100% { opacity: 0; transform: scale(1.2); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zaeb-about::after { opacity: 0.96; }
+  .zaeb-about.is-badge-ready .zaeb-about-badge::after { animation: none; opacity: 0; }
+}
+
+
+/* developer-badge-strap-v1: restored lanyard badge from the supplied reference component. */
+.zaeb-about-badge-wrap { min-height: 31rem; margin-bottom: 1.4rem; }
+.zaeb-developer-badge-stage { position: relative; display: flex; width: min(100%, 22rem); min-height: 30rem; flex-direction: column; align-items: center; justify-content: flex-start; color: var(--about-text); }
+.zaeb-developer-pendulum { display: flex; width: 100%; flex-direction: column; align-items: center; transform-origin: 50% 0; transform-style: preserve-3d; will-change: transform, opacity; }
+.zaeb-developer-lanyard { width: 12rem; height: 7.4rem; overflow: hidden; pointer-events: none; }
+.zaeb-developer-lanyard svg { display: block; width: 100%; height: 100%; }
+.zaeb-developer-clip { position: relative; z-index: 2; display: flex; width: 4rem; height: 2.5rem; flex-direction: column; align-items: center; margin-top: -1.35rem; transform-origin: top center; transform-style: preserve-3d; }
+.zaeb-developer-clip span { width: 2rem; height: 0.55rem; border: 1px solid rgba(237,230,221,.25); border-radius: 0.18rem; background: linear-gradient(#8c8873, #4a473b); }
+.zaeb-developer-clip i { display: block; width: 1.15rem; height: 1.15rem; margin-top: -0.15rem; border: 3px solid #8c8873; border-radius: 50%; }
+.zaeb-developer-card { position: relative; display: flex; width: min(100%, 18.5rem); height: 25rem; flex-direction: column; justify-content: space-between; padding: 1rem; overflow: hidden; cursor: pointer; border: 1px solid rgba(156,145,135,.7); border-radius: 0.75rem; background: linear-gradient(145deg, #1e1b20, #100e13); box-shadow: 0 1.4rem 3rem rgba(0,0,0,.34), inset 0 1px 0 rgba(237,230,221,.06); transform-style: preserve-3d; transition: box-shadow 200ms ease, border-color 200ms ease; }
+.zaeb-developer-card::before { position: absolute; inset: 0.45rem; border: 1px solid rgba(237,230,221,.11); border-radius: 0.55rem; content: ""; pointer-events: none; }
+.zaeb-developer-card:hover, .zaeb-developer-card:focus-visible { border-color: rgba(237,230,221,.86); outline: none; box-shadow: 0 1.8rem 3.6rem rgba(0,0,0,.42), 0 0 1.6rem rgba(74,20,32,.28); }
+.zaeb-developer-card-head, .zaeb-developer-card-foot { position: relative; z-index: 2; display: flex; justify-content: space-between; gap: 0.6rem; font-family: var(--font-mono), "JetBrains Mono", monospace; text-transform: uppercase; }
+.zaeb-developer-card-head b { display: block; color: var(--about-text); font-size: 0.5rem; letter-spacing: .18em; }
+.zaeb-developer-card-head small, .zaeb-developer-nfc small { display: block; margin-top: .25rem; color: rgba(156,145,135,.7); font-size: .42rem; letter-spacing: .12em; }
+.zaeb-developer-nfc { display: flex; flex-direction: column; align-items: flex-end; color: rgba(237,230,221,.72); }
+.zaeb-developer-portrait { position: relative; z-index: 2; width: 8.7rem; height: 8.7rem; margin: 0 auto; padding: .25rem; border: 1px solid rgba(156,145,135,.52); border-radius: .55rem; background: #0d0c0f; }
+.zaeb-developer-portrait img { display: block; width: 100%; height: 100%; border-radius: .36rem; object-fit: cover; filter: contrast(1.08) saturate(.78); }
+.zaeb-developer-portrait em { position: absolute; right: .35rem; bottom: .2rem; color: rgba(237,230,221,.54); font-family: var(--font-mono), monospace; font-size: .4rem; font-style: normal; }
+.zaeb-developer-corner { position: absolute; z-index: 3; width: .8rem; height: .8rem; border-color: rgba(156,145,135,.85); border-style: solid; }
+.zaeb-developer-corner.top-left { top: -.2rem; left: -.2rem; border-width: 1px 0 0 1px; }
+.zaeb-developer-corner.top-right { top: -.2rem; right: -.2rem; border-width: 1px 1px 0 0; }
+.zaeb-developer-corner.bottom-left { bottom: -.2rem; left: -.2rem; border-width: 0 0 1px 1px; }
+.zaeb-developer-corner.bottom-right { right: -.2rem; bottom: -.2rem; border-width: 0 1px 1px 0; }
+.zaeb-developer-name { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: .32rem; text-align: center; }
+.zaeb-developer-name strong { color: var(--about-text); font-family: var(--font-sans), Inter, sans-serif; font-size: .9rem; font-style: italic; letter-spacing: .02em; }
+.zaeb-developer-name small { padding: .22rem .52rem; border: 1px solid rgba(156,145,135,.36); border-radius: 999px; color: rgba(237,230,221,.74); font-family: var(--font-mono), monospace; font-size: .42rem; letter-spacing: .13em; }
+.zaeb-developer-card-foot { position: relative; z-index: 2; flex-wrap: wrap; padding-top: .65rem; border-top: 1px solid rgba(156,145,135,.38); color: rgba(156,145,135,.64); font-size: .42rem; line-height: 1.55; letter-spacing: .1em; }
+.zaeb-developer-card-foot span:last-of-type { text-align: right; }
+.zaeb-developer-card-foot b { color: var(--about-text); font-weight: 500; }
+.zaeb-developer-barcode { width: 100%; height: 1.4rem; margin-top: .25rem; opacity: .62; background: repeating-linear-gradient(90deg, var(--about-text) 0 2px, transparent 2px 4px, var(--about-text) 4px 5px, transparent 5px 8px); }
+.zaeb-developer-scanline { position: absolute; top: -2%; left: 0; z-index: 3; width: 100%; height: 2px; background: rgba(237,230,221,.5); box-shadow: 0 0 10px rgba(237,230,221,.32); pointer-events: none; }
+.zaeb-developer-shine { position: absolute; inset: 0; z-index: 1; background: radial-gradient(circle at 50% 50%, rgba(237,230,221,.08), transparent 70%); mix-blend-mode: screen; pointer-events: none; transition: background 180ms ease; }
+.zaeb-developer-tap { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .45rem; background: rgba(74,20,32,.94); color: var(--about-text); font-family: var(--font-mono), monospace; font-size: .58rem; letter-spacing: .1em; opacity: 0; transform: scale(.95); transition: opacity 300ms var(--about-ease), transform 300ms var(--about-ease); pointer-events: none; }
+.zaeb-developer-card.is-tapped .zaeb-developer-tap { opacity: 1; transform: scale(1); }
+.zaeb-developer-prompt { display: inline-flex; align-items: center; gap: .35rem; margin-top: .9rem; color: rgba(237,230,221,.48); font-family: var(--font-mono), monospace; font-size: .48rem; letter-spacing: .12em; }
+@media (max-width: 760px) { .zaeb-about-badge-wrap { min-height: 27rem; } .zaeb-developer-badge-stage { min-height: 26.5rem; } .zaeb-developer-lanyard { width: 10rem; height: 6rem; } .zaeb-developer-card { width: min(100%, 15.5rem); height: 21rem; padding: .78rem; } .zaeb-developer-portrait { width: 7rem; height: 7rem; } .zaeb-developer-name strong { font-size: .75rem; } }
+@media (prefers-reduced-motion: reduce) { .zaeb-developer-pendulum, .zaeb-developer-card, .zaeb-developer-clip { transform: none !important; } .zaeb-developer-scanline { display: none; } }
+
+
+/* about-formation-motion-v1: bento cells flank the physical badge instead of stacking beneath it. */
+.zaeb-about-badge-wrap { display: none; }
+.zaeb-about-formation { display: grid; grid-template-columns: minmax(13rem, .82fr) minmax(18rem, 1fr) minmax(13rem, .82fr); gap: clamp(.85rem, 2vw, 1.8rem); align-items: center; min-height: 31rem; }
+.zaeb-about-formation-center { display: grid; min-width: 0; place-items: center; }
+.zaeb-about-formation-side { display: grid; gap: .75rem; align-content: center; min-width: 0; }
+.zaeb-about-formation-left { grid-template-rows: repeat(2, minmax(10.5rem, 1fr)); }
+.zaeb-about-formation-right { grid-template-rows: repeat(2, minmax(9rem, 1fr)); }
+.zaeb-about-formation .zaeb-about-cell { min-height: 9rem; }
+.zaeb-about-formation .zaeb-about-cell.is-expanded { min-height: 18rem; }
+.zaeb-about-formation .zaeb-about-cell-inner { padding: .9rem; }
+.zaeb-about-formation .zaeb-about-cell-summary { font-size: clamp(.76rem, 1.05vw, .98rem); }
+.zaeb-about-formation-center .zaeb-developer-badge-stage { width: min(100%, 22rem); }
+@media (max-width: 980px) { .zaeb-about-formation { grid-template-columns: minmax(11rem, .72fr) minmax(17rem, 1fr) minmax(11rem, .72fr); gap: .65rem; } .zaeb-about-formation .zaeb-about-cell-summary { font-size: .73rem; } }
+@media (max-width: 760px) {
+  .zaeb-about-formation { grid-template-columns: 1fr; gap: 1.2rem; min-height: 0; }
+  .zaeb-about-formation-center { order: -1; }
+  .zaeb-about-formation-side { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; gap: .55rem; }
+  .zaeb-about-formation-left, .zaeb-about-formation-right { grid-template-rows: none; }
+  .zaeb-about-formation .zaeb-about-cell, .zaeb-about-formation .zaeb-about-cell.is-expanded { min-height: 8rem; }
+  .zaeb-about-formation .zaeb-about-cell.is-expanded { grid-column: 1 / -1; min-height: 15rem; }
+}
+@media (prefers-reduced-motion: reduce) { .zaeb-about-formation .zaeb-about-cell { transform: none !important; } }
+
+
+/* about-formation-refinement-v1: slower reveal, visible About statement lines, and hover expansion. */
+.zaeb-about-formation .zaeb-about-cell { transition: opacity 980ms var(--about-ease) var(--cell-delay), transform 1050ms var(--about-ease), min-height 900ms var(--about-ease), border-color 260ms ease, filter 520ms ease; }
+.zaeb-about-formation .zaeb-about-cell-summary { white-space: pre-line; }
+.zaeb-about-formation .zaeb-about-cell-about .zaeb-about-cell-summary { max-width: 18rem; font-size: clamp(.9rem, 1.2vw, 1.12rem); line-height: 1.55; }
+.zaeb-about-formation .zaeb-about-cell.is-hover-expanded { z-index: 4; min-height: 13.5rem; border-color: rgba(237,230,221,.82); background: rgba(30,27,32,.9); transform: perspective(900px) rotateX(0) rotateY(0) scale(1.045) !important; box-shadow: 0 1rem 2.4rem rgba(0,0,0,.3), inset 0 0 0 1px rgba(74,20,32,.42); }
+.zaeb-about-formation .zaeb-about-cell.is-hover-expanded .zaeb-about-cell-summary { max-width: 25rem; padding-top: .8rem; font-size: .82rem; line-height: 1.55; animation: about-hover-copy-in 560ms var(--about-ease) both; }
+.zaeb-about-formation .zaeb-about-cell.is-hover-expanded .zaeb-about-cell-tags { opacity: 1; animation: about-hover-tags-in 620ms var(--about-ease) 80ms both; }
+.zaeb-about-formation .zaeb-about-cell.is-expanded { min-height: 18rem; }
+@keyframes about-hover-copy-in { from { opacity: .35; transform: translateY(.45rem); } to { opacity: 1; transform: translateY(0); } }
+@keyframes about-hover-tags-in { from { opacity: 0; transform: translateY(.35rem); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 760px) { .zaeb-about-formation .zaeb-about-cell.is-hover-expanded { min-height: 11rem; transform: scale(1.025) !important; } .zaeb-about-formation .zaeb-about-cell.is-hover-expanded .zaeb-about-cell-summary { font-size: .76rem; } }
+@media (prefers-reduced-motion: reduce) { .zaeb-about-formation .zaeb-about-cell, .zaeb-about-formation .zaeb-about-cell.is-hover-expanded { transition: opacity 180ms ease, border-color 180ms ease; transform: none !important; } }
+
+
+/* framer-horizontal-adaptation-v1: damped section reveal, horizontal drift, and paper-like About anchor. */
+.zaeb-about {
+  --formation-inv: calc(1 - var(--about-progress, 0));
+  overflow: clip;
+}
+.zaeb-about-depth { filter: blur(calc(var(--formation-inv) * 3px)); transition: filter 180ms linear; }
+.zaeb-about-formation { position: relative; z-index: 2; transform: scale(calc(.96 + var(--about-progress, 0) * .04)); transition: transform 140ms linear; }
+.zaeb-about-formation-left { translate: calc(var(--formation-inv) * -5rem) 0; opacity: calc(.32 + var(--about-progress, 0) * .68); transition: translate 180ms var(--about-ease), opacity 180ms linear; }
+.zaeb-about-formation-right { translate: calc(var(--formation-inv) * 5rem) 0; opacity: calc(.32 + var(--about-progress, 0) * .68); transition: translate 180ms var(--about-ease), opacity 180ms linear; }
+.zaeb-about-formation-center { translate: 0 calc(var(--formation-inv) * -2rem); opacity: calc(.25 + var(--about-progress, 0) * .75); transition: translate 180ms var(--about-ease), opacity 180ms linear; }
+.zaeb-about-me-paper { position: relative; z-index: 3; width: min(100%, 66rem); margin: clamp(1.3rem, 3vw, 2.4rem) auto 0; padding: .6rem; clip-path: inset(0 50% 0 50% round 1.2rem); opacity: .2; translate: 0 calc(var(--formation-inv) * 2.2rem); scale: calc(.9 + var(--about-progress, 0) * .1); background: linear-gradient(135deg, rgba(237,230,221,.18), transparent 30%, rgba(74,20,32,.32)); transition: clip-path 780ms var(--about-ease), opacity 620ms ease, translate 620ms var(--about-ease), scale 620ms var(--about-ease); }
+.zaeb-about-me-paper.is-visible { clip-path: inset(0 0% 0 0% round 1.2rem); opacity: 1; }
+.zaeb-about-me-paper .zaeb-about-cell { min-height: 12rem; border-color: rgba(237,230,221,.62); border-radius: .9rem; background: linear-gradient(115deg, rgba(30,27,32,.88), rgba(44,27,34,.75)); }
+.zaeb-about-me-paper .zaeb-about-cell-inner { padding: clamp(1.1rem, 2vw, 1.8rem); }
+.zaeb-about-me-paper .zaeb-about-cell-summary { max-width: 50rem; font-size: clamp(1.05rem, 2vw, 1.65rem); line-height: 1.42; }
+.zaeb-about-me-paper .zaeb-about-cell.is-hover-expanded { min-height: 17rem; transform: scale(1.015) !important; }
+.zaeb-about-me-paper .zaeb-about-cell.is-hover-expanded .zaeb-about-cell-summary { max-width: 54rem; font-size: clamp(1rem, 1.6vw, 1.3rem); }
+.zaeb-about-me-card .zaeb-about-cell-title { color: rgba(237,230,221,.78); letter-spacing: .16em; }
+.zaeb-about-me-card .zaeb-about-hover-dot { width: .5rem; height: .5rem; background: rgba(237,230,221,.82); }
+.zaeb-about-formation .zaeb-about-cell {
+  clip-path: polygon(0 3%, 4% 0, 96% 0, 100% 4%, 100% 96%, 97% 100%, 3% 100%, 0 96%);
+}
+.zaeb-about-formation-left .zaeb-about-cell { clip-path: polygon(0 5%, 5% 0, 96% 2%, 100% 8%, 98% 94%, 93% 100%, 4% 97%, 0 91%); }
+.zaeb-about-formation-right .zaeb-about-cell:nth-child(even) { clip-path: polygon(3% 0, 96% 3%, 100% 9%, 97% 96%, 91% 100%, 0 98%, 2% 6%); }
+@media (max-width: 760px) {
+  .zaeb-about-formation-left, .zaeb-about-formation-right, .zaeb-about-formation-center { translate: none; opacity: 1; }
+  .zaeb-about-me-paper { width: 100%; margin-top: 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zaeb-about-depth, .zaeb-about-formation, .zaeb-about-formation-left, .zaeb-about-formation-right, .zaeb-about-formation-center, .zaeb-about-me-paper { filter: none; translate: none; scale: none; transition: none; }
+  .zaeb-about-me-paper { clip-path: inset(0); opacity: 1; }
+}
+
+
+/* about-shrink-enlarge-v1: one continuous formation scale replaces the two-side door opening. */
+.zaeb-about-formation-left, .zaeb-about-formation-right { translate: none; transform: scale(calc(.82 + var(--about-progress, 0) * .18)); opacity: calc(.42 + var(--about-progress, 0) * .58); transition: transform 420ms cubic-bezier(.22,.8,.22,1), opacity 360ms ease; }
+.zaeb-about-formation-left { transform-origin: 100% 50%; }
+.zaeb-about-formation-right { transform-origin: 0 50%; }
+.zaeb-about-formation-center { translate: none; transform: scale(calc(.86 + var(--about-progress, 0) * .14)); opacity: calc(.46 + var(--about-progress, 0) * .54); transition: transform 460ms cubic-bezier(.22,.8,.22,1), opacity 360ms ease; }
+.zaeb-about-formation-right { grid-template-rows: auto repeat(2, minmax(9rem, 1fr)); }
+.zaeb-about-stack-panel { position: relative; display: flex; min-height: 11.8rem; flex-direction: column; justify-content: space-between; padding: 1rem; overflow: hidden; cursor: pointer; border: 1px solid rgba(156,145,135,.68); border-radius: .82rem; background: linear-gradient(135deg, rgba(30,27,32,.92), rgba(57,30,39,.72)); opacity: 0; transform: perspective(850px) rotateX(var(--stack-rx, 0deg)) rotateY(var(--stack-ry, 0deg)) scale(.88); transform-origin: 50% 0; transition: opacity 1100ms var(--about-ease) var(--cell-delay), transform 900ms var(--about-ease), min-height 850ms var(--about-ease), border-color 260ms ease, filter 420ms ease; }
+.zaeb-about-stack-panel.is-visible { opacity: 1; transform: perspective(850px) rotateX(var(--stack-rx, 0deg)) rotateY(var(--stack-ry, 0deg)) scale(1); }
+.zaeb-about-stack-panel.is-hover-expanded { z-index: 5; min-height: 16rem; border-color: rgba(237,230,221,.86); transform: perspective(850px) rotateX(0deg) rotateY(0deg) scale(1.035); box-shadow: 0 1.1rem 2.4rem rgba(0,0,0,.3); }
+.zaeb-about-stack-panel.is-expanded { z-index: 6; min-height: 18rem; border-color: rgba(237,230,221,.86); }
+.zaeb-about-stack-panel.is-dimmed { opacity: .38; filter: saturate(.55); }
+.zaeb-about-stack-index { color: rgba(156,145,135,.72); font-family: var(--font-mono), monospace; font-size: .48rem; letter-spacing: .16em; }
+.zaeb-about-stack-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.zaeb-about-stack-columns > div + div { padding-left: 1rem; border-left: 1px solid rgba(156,145,135,.28); }
+.zaeb-about-stack-columns p { margin: 0 0 .45rem; color: rgba(156,145,135,.8); font-family: var(--font-mono), monospace; font-size: .52rem; letter-spacing: .14em; }
+.zaeb-about-stack-columns strong { display: block; color: var(--about-text); font-size: .84rem; font-weight: 500; line-height: 1.55; }
+.zaeb-about-stack-panel.is-hover-expanded .zaeb-about-stack-columns strong, .zaeb-about-stack-panel.is-expanded .zaeb-about-stack-columns strong { font-size: .75rem; line-height: 1.6; animation: about-hover-copy-in 560ms var(--about-ease) both; }
+.zaeb-about-stack-glare { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 50%, rgba(237,230,221,.1), transparent 62%); opacity: 0; transition: opacity 340ms ease; }
+.zaeb-about-stack-panel:hover .zaeb-about-stack-glare, .zaeb-about-stack-panel:focus-visible .zaeb-about-stack-glare { opacity: 1; }
+@media (max-width: 760px) { .zaeb-about-formation-left, .zaeb-about-formation-right, .zaeb-about-formation-center { transform: none; opacity: 1; transition: none; } .zaeb-about-stack-columns { gap: .65rem; } .zaeb-about-stack-columns > div + div { padding-left: .65rem; } .zaeb-about-stack-panel { min-height: 10rem; } }
+@media (prefers-reduced-motion: reduce) { .zaeb-about-formation-left, .zaeb-about-formation-right, .zaeb-about-formation-center, .zaeb-about-stack-panel { transform: none !important; transition: opacity 180ms ease; } }
+
+
+/* about-curl-fixed-bg-v1: adapt pasted_content_12 curl and badge-strap scroll language without touching the artifact. */
+.zaeb-about { position: relative; isolation: isolate; perspective: 1800px; perspective-origin: 50% 0%; background: #030304 !important; }
+.zaeb-about::before { position: fixed; inset: 0; z-index: -3; content: ""; pointer-events: none; background: url("/about-bg/constellation-field.webp") center / cover no-repeat; transform: translateZ(0); will-change: auto; }
+.zaeb-about::after { z-index: -2; background: linear-gradient(180deg, rgba(3,3,4,.72), rgba(3,3,4,.42) 42%, rgba(3,3,4,.78)); opacity: calc(.76 - (var(--about-progress, 0) * .16)); }
+.zaeb-about-depth { display: none; }
+.zaeb-about-shell { transform: perspective(1800px) rotateX(calc((1 - var(--about-progress, 0)) * 4.5deg)) scale(calc(.985 + (var(--about-progress, 0) * .015))); transform-origin: 50% 0; will-change: transform; }
+.zaeb-about-formation { transform: perspective(1400px) rotateX(calc((1 - var(--about-progress, 0)) * 7deg)) scale(calc(.88 + (var(--about-progress, 0) * .12))); transform-origin: 50% 0; will-change: transform; }
+.zaeb-about-formation-left, .zaeb-about-formation-right { transform: scale(calc(.82 + var(--about-progress, 0) * .18)); }
+.zaeb-about-me-paper { --paper-p: var(--about-paper-progress, 0); clip-path: inset(0 calc((1 - var(--paper-p)) * 50%) 0 calc((1 - var(--paper-p)) * 50%) round 1.2rem); opacity: calc(.22 + (var(--paper-p) * .78)); transform: perspective(1400px) rotateX(calc((1 - var(--paper-p)) * 10deg)) scale(calc(.91 + (var(--paper-p) * .09))); transform-origin: 50% 0; will-change: transform, clip-path, opacity; transition: clip-path 120ms linear, transform 120ms linear, opacity 120ms linear; }
+.zaeb-about-me-paper.is-visible { clip-path: inset(0 calc((1 - var(--paper-p)) * 50%) 0 calc((1 - var(--paper-p)) * 50%) round 1.2rem); opacity: calc(.22 + (var(--paper-p) * .78)); }
+.zaeb-about-me-paper::before, .zaeb-about-me-paper::after { position: absolute; top: 0; bottom: 0; z-index: 4; width: 1px; content: ""; background: linear-gradient(180deg, transparent, rgba(237,230,221,.56), transparent); opacity: calc(1 - var(--paper-p)); pointer-events: none; }
+.zaeb-about-me-paper::before { left: 50%; transform: translateX(-50%); }
+.zaeb-about-me-paper::after { display: none; }
+.zaeb-about-formation .zaeb-about-cell, .zaeb-about-stack-panel { will-change: transform, opacity, filter; }
+@media (max-width: 760px) { .zaeb-about { perspective: none; } .zaeb-about::before { position: absolute; background-attachment: scroll; } .zaeb-about-shell, .zaeb-about-formation, .zaeb-about-formation-left, .zaeb-about-formation-right, .zaeb-about-formation-center, .zaeb-about-me-paper { transform: none; } .zaeb-about-me-paper { clip-path: inset(0 0 round 1.2rem); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .zaeb-about::before { position: absolute; } .zaeb-about-shell, .zaeb-about-formation, .zaeb-about-formation-left, .zaeb-about-formation-right, .zaeb-about-formation-center, .zaeb-about-me-paper { transform: none !important; transition: none !important; } .zaeb-about-me-paper, .zaeb-about-me-paper.is-visible { clip-path: inset(0 round 1.2rem); opacity: 1; } .zaeb-about-me-paper::before { display: none; } }
+
+
+/* about-wallpaper-balance-v2: visible fixed field, constrained formation, 2x2 grouping, and low-lag scroll motion. */
+.zaeb-about { overflow: clip; background: #030304 !important; }
+.zaeb-about::before { z-index: 0; opacity: .82; background-image: url("/about-bg/constellation-field.webp"); background-position: center center; background-size: cover; }
+.zaeb-about::after { z-index: 1; opacity: .62; background: linear-gradient(180deg, rgba(3,3,4,.58), rgba(3,3,4,.24) 44%, rgba(3,3,4,.66)); }
+.zaeb-about-shell { z-index: 2; width: min(100% - 2.4rem, 82rem); contain: layout paint style; transition: none; }
+.zaeb-about-formation { width: min(100%, 70rem); margin-inline: auto; grid-template-columns: minmax(0, 1fr) minmax(17rem, 23rem) minmax(0, 1fr); gap: clamp(.9rem, 2.2vw, 2rem); contain: layout paint; transition: none; }
+.zaeb-about-formation-side { display: grid; grid-template-rows: repeat(2, minmax(9.3rem, auto)); align-content: center; gap: clamp(.75rem, 1.4vw, 1.15rem); transition: none; }
+.zaeb-about-formation-left { transform-origin: 100% 50%; }
+.zaeb-about-formation-right { grid-template-rows: repeat(2, minmax(9.3rem, auto)); transform-origin: 0 50%; }
+.zaeb-about-formation-center { min-width: 0; transition: none; }
+.zaeb-about-formation .zaeb-about-cell, .zaeb-about-stack-panel { min-height: 9.3rem; transition: opacity 720ms var(--about-ease) var(--cell-delay), transform 420ms cubic-bezier(.22,.8,.22,1), border-color 260ms ease, filter 260ms ease; }
+.zaeb-about-stack-panel { min-height: 19.2rem; padding: clamp(1.1rem, 1.7vw, 1.55rem); transform-origin: 50% 50%; }
+.zaeb-about-stack-columns { gap: clamp(1.25rem, 2.2vw, 2.2rem); align-items: stretch; }
+.zaeb-about-stack-columns > div { min-width: 0; padding-right: clamp(.65rem, 1vw, 1rem); }
+.zaeb-about-stack-columns > div + div { padding-right: 0; padding-left: clamp(1.25rem, 2.2vw, 2.2rem); border-left-color: rgba(237,230,221,.36); }
+.zaeb-about-stack-columns strong { font-size: clamp(.76rem, 1vw, .95rem); line-height: 1.62; overflow-wrap: anywhere; }
+.zaeb-about-stack-panel.is-hover-expanded { min-height: 20.5rem; }
+.zaeb-about-stack-panel.is-expanded { min-height: 22rem; }
+.zaeb-about-me-paper { width: min(100%, 70rem); margin-inline: auto; transition: none; }
+.zaeb-about-me-paper.is-visible { transition: none; }
+@media (max-width: 980px) { .zaeb-about-formation { grid-template-columns: minmax(0, 1fr) minmax(14rem, 19rem) minmax(0, 1fr); gap: .8rem; } .zaeb-about-stack-columns { grid-template-columns: 1fr; gap: .85rem; } .zaeb-about-stack-columns > div + div { padding-top: .85rem; padding-left: 0; border-top: 1px solid rgba(237,230,221,.3); border-left: 0; } }
+@media (max-width: 760px) { .zaeb-about::before { z-index: 0; opacity: .74; } .zaeb-about-formation { display: grid; grid-template-columns: 1fr; width: 100%; gap: .8rem; } .zaeb-about-formation-left, .zaeb-about-formation-right { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-template-rows: none; gap: .65rem; } .zaeb-about-formation-center { order: -1; } .zaeb-about-stack-panel { grid-column: 1 / -1; min-height: 12rem; } .zaeb-about-formation .zaeb-about-cell { min-height: 8rem; } }
+@media (prefers-reduced-motion: reduce) { .zaeb-about::before { opacity: .74; } .zaeb-about-formation, .zaeb-about-formation-left, .zaeb-about-formation-right, .zaeb-about-formation-center, .zaeb-about-shell { transform: none !important; } }
+
+
+/* about-wallpaper-visible-v3: final visibility and balanced formation correction. */
+.zaeb-about { background: #0b070b url("/about-bg/constellation-field.webp") center center / cover fixed no-repeat !important; background-blend-mode: screen; }
+.zaeb-about::before { position: fixed !important; z-index: 0; opacity: .96; background: url("/about-bg/constellation-field.webp") center center / cover no-repeat; filter: brightness(1.34) saturate(1.18); }
+.zaeb-about::after { z-index: 1; opacity: .38; background: linear-gradient(180deg, rgba(4,3,5,.42), rgba(4,3,5,.18) 44%, rgba(4,3,5,.5)); }
+.zaeb-about-shell { z-index: 2; width: min(100% - 2.4rem, 82rem); }
+.zaeb-about-formation { width: min(100%, 68rem); grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem) minmax(0, 1fr); gap: clamp(1rem, 2.8vw, 2.4rem); }
+.zaeb-about-formation-left, .zaeb-about-formation-right { gap: clamp(.8rem, 1.5vw, 1.35rem); }
+.zaeb-about-stack-panel { padding-inline: clamp(1.25rem, 2.3vw, 2.1rem); }
+.zaeb-about-stack-columns { gap: clamp(1.7rem, 3vw, 3rem); }
+.zaeb-about-stack-columns > div { padding-right: clamp(1rem, 1.7vw, 1.5rem); }
+.zaeb-about-stack-columns > div + div { padding-left: clamp(1.7rem, 3vw, 3rem); }
+.zaeb-about-stack-columns p { margin-bottom: .68rem; }
+.zaeb-about-stack-columns strong { line-height: 1.72; }
+@media (max-width: 760px) { .zaeb-about { background-attachment: scroll; } .zaeb-about::before { position: absolute !important; filter: brightness(1.2) saturate(1.08); } .zaeb-about-formation { width: 100%; grid-template-columns: 1fr; gap: .8rem; } .zaeb-about-stack-columns { gap: 1rem; } .zaeb-about-stack-columns > div + div { padding-left: 0; } }
+
+
+/* about-stack-spacing-v4: improve readability inside the merged Frontend/Backend panel. */
+.zaeb-about-formation { width: min(100%, 72rem); grid-template-columns: minmax(0, 1fr) minmax(20rem, 24rem) minmax(0, 1fr); gap: clamp(1rem, 2vw, 1.65rem); }
+.zaeb-about-stack-panel { min-width: 0; padding-inline: clamp(1.1rem, 1.8vw, 1.65rem); }
+.zaeb-about-stack-columns { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1rem, 1.7vw, 1.65rem); }
+.zaeb-about-stack-columns > div, .zaeb-about-stack-columns > div + div { min-width: 0; padding-inline: clamp(.75rem, 1.2vw, 1.05rem); }
+.zaeb-about-stack-columns > div + div { border-left: 1px solid rgba(237,230,221,.34); }
+.zaeb-about-stack-columns strong { font-size: clamp(.74rem, .86vw, .88rem); line-height: 1.58; word-break: normal; }
+@media (max-width: 980px) { .zaeb-about-formation { grid-template-columns: minmax(0, 1fr) minmax(18rem, 21rem) minmax(0, 1fr); gap: 1rem; } }
+@media (max-width: 760px) { .zaeb-about-formation { width: 100%; grid-template-columns: 1fr; } .zaeb-about-stack-columns { grid-template-columns: 1fr; } .zaeb-about-stack-columns > div + div { padding-top: .9rem; padding-left: 0; border-left: 0; border-top: 1px solid rgba(237,230,221,.3); } }
+
+
+/* about-spacing-polish-v1: consistent internal rhythm across cards and badge. */
+.zaeb-about-formation .zaeb-about-cell { overflow: hidden; }
+.zaeb-about-formation .zaeb-about-cell-inner { padding: 1.05rem 1.15rem 1.1rem; gap: .18rem; }
+.zaeb-about-formation .zaeb-about-cell-index { margin-bottom: .18rem; }
+.zaeb-about-formation .zaeb-about-cell-title { margin: .72rem 0 .62rem; line-height: 1.2; }
+.zaeb-about-formation .zaeb-about-cell-summary { padding-right: .15rem; line-height: 1.58; }
+.zaeb-about-formation .zaeb-about-cell-tags { gap: .35rem; padding-top: .92rem; line-height: 1.45; }
+.zaeb-about-stack-panel { padding: 1.22rem 1.35rem 1.3rem; }
+.zaeb-about-stack-index { margin-bottom: .45rem; }
+.zaeb-about-stack-columns { margin-top: .55rem; }
+.zaeb-about-stack-columns > div, .zaeb-about-stack-columns > div + div { padding-inline: 1rem; }
+.zaeb-about-stack-columns strong { padding-right: .15rem; }
+.zaeb-about-me-paper .zaeb-about-cell-inner { padding: 1.35rem 1.55rem 1.45rem; }
+.zaeb-developer-card { padding: 1.18rem; }
+.zaeb-developer-card-head { margin-bottom: .2rem; }
+.zaeb-developer-portrait { margin: .18rem auto .28rem; }
+.zaeb-developer-name { gap: .42rem; }
+.zaeb-developer-card-foot { margin-top: .28rem; padding-top: .78rem; }
+@media (max-width: 760px) { .zaeb-about-formation .zaeb-about-cell-inner { padding: .9rem .95rem 1rem; } .zaeb-about-stack-panel { padding: 1rem; } .zaeb-about-stack-columns > div, .zaeb-about-stack-columns > div + div { padding-inline: .2rem; } .zaeb-about-me-paper .zaeb-about-cell-inner { padding: 1.1rem 1.15rem 1.2rem; } .zaeb-developer-card { padding: .9rem; } }
+
+
+/* about-prelude-gap-v1: breathing room for the dotted-grid handoff from Hero into About. */
+.zaeb-about-prelude-gap { position: relative; z-index: 0; height: clamp(5.5rem, 11vh, 9rem); overflow: hidden; background: #030304; isolation: isolate; }
+.zaeb-about-prelude-gap::before { position: absolute; inset: 0; content: ""; pointer-events: none; opacity: .32; background-image: radial-gradient(circle, rgba(156,145,135,.46) 1px, transparent 1.3px); background-position: center; background-size: 18px 18px; mask-image: linear-gradient(90deg, transparent, black 18%, black 82%, transparent), linear-gradient(180deg, transparent, black 28%, black 72%, transparent); mask-composite: intersect; transition: opacity 520ms ease, background-size 900ms cubic-bezier(.22,.8,.22,1); }
+.zaeb-about-prelude-gap::after { position: absolute; inset: 0; content: ""; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, rgba(74,20,32,.22), transparent 58%); opacity: .65; transition: opacity 520ms ease; }
+.zaeb-about-prelude-gap:hover::before, .zaeb-about-prelude-gap:focus-within::before { opacity: .72; background-size: 22px 22px; }
+.zaeb-about-prelude-gap:hover::after { opacity: 1; }
+.zaeb-about-stack-panel { min-height: 16.8rem; justify-content: flex-start; gap: 2rem; }
+.zaeb-about-stack-columns { margin-top: .3rem; }
+.zaeb-about-formation .zaeb-about-cell-inner { padding-top: 1rem; padding-bottom: 1rem; }
+@media (max-width: 760px) { .zaeb-about-prelude-gap { height: 4.2rem; } .zaeb-about-prelude-gap::before { background-size: 14px 14px; opacity: .28; } .zaeb-about-stack-panel { min-height: 13.5rem; gap: 1.2rem; } }
+@media (prefers-reduced-motion: reduce) { .zaeb-about-prelude-gap::before, .zaeb-about-prelude-gap::after { transition: none; } .zaeb-about-prelude-gap:hover::before { background-size: 18px 18px; } }
+
+
+/* about-curl-restore-v2: re-enable the visible perspective peel after layout overrides. */
+.zaeb-about-shell {
+  transform-style: preserve-3d;
+  transform-origin: 50% 0%;
+  transform: translate3d(0, calc((1 - var(--about-progress, 0)) * 1.4rem), 0) perspective(1600px) rotateX(calc((1 - var(--about-progress, 0)) * 8deg)) rotateY(calc((0.5 - var(--about-progress, 0)) * 2.2deg)) scale(calc(.972 + (var(--about-progress, 0) * .028)));
+  will-change: transform;
+}
+.zaeb-about-formation {
+  transform-style: preserve-3d;
+  transform-origin: 50% 0%;
+  transform: perspective(1300px) rotateX(calc((1 - var(--about-progress, 0)) * 11deg)) rotateZ(calc((0.5 - var(--about-progress, 0)) * 1.1deg)) scale(calc(.84 + (var(--about-progress, 0) * .16)));
+  will-change: transform;
+}
+.zaeb-about-formation-left { transform-origin: 100% 50%; transform: translate3d(calc((1 - var(--about-progress, 0)) * -2.4rem), 0, 0) rotateY(calc((1 - var(--about-progress, 0)) * 6deg)) scale(calc(.84 + (var(--about-progress, 0) * .16))); }
+.zaeb-about-formation-right { transform-origin: 0 50%; transform: translate3d(calc((1 - var(--about-progress, 0)) * 2.4rem), 0, 0) rotateY(calc((1 - var(--about-progress, 0)) * -6deg)) scale(calc(.84 + (var(--about-progress, 0) * .16))); }
+.zaeb-about-formation-center { transform-origin: 50% 0; transform: translate3d(0, calc((1 - var(--about-progress, 0)) * -1.8rem), 0) rotateX(calc((1 - var(--about-progress, 0)) * 5deg)) scale(calc(.9 + (var(--about-progress, 0) * .1))); }
+.zaeb-about-me-paper {
+  transform-style: preserve-3d;
+  transform-origin: 50% 0%;
+  transform: perspective(1300px) rotateX(calc((1 - var(--about-paper-progress, 0)) * 15deg)) rotateZ(calc((0.5 - var(--about-paper-progress, 0)) * 1.4deg)) translate3d(0, calc((1 - var(--about-paper-progress, 0)) * 2.8rem), 0) scale(calc(.88 + (var(--about-paper-progress, 0) * .12)));
+  will-change: transform, clip-path, opacity;
+}
+@media (max-width: 760px) {
+  .zaeb-about-shell, .zaeb-about-formation, .zaeb-about-formation-left, .zaeb-about-formation-right, .zaeb-about-formation-center, .zaeb-about-me-paper { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zaeb-about-shell, .zaeb-about-formation, .zaeb-about-formation-left, .zaeb-about-formation-right, .zaeb-about-formation-center, .zaeb-about-me-paper { transform: none !important; }
+}
+
+
+/* about-tech-scatter-v1: six independent stack cards gather low-left, then peel outward into their final positions. */
+.zaeb-about-formation-side { grid-template-rows: repeat(3, minmax(7.2rem, auto)); align-content: center; gap: clamp(.6rem, 1.1vw, .9rem); }
+.zaeb-about-formation-left, .zaeb-about-formation-right { transform-style: preserve-3d; }
+.zaeb-about-formation .zaeb-about-formation-side .zaeb-about-cell { min-height: 7.2rem; transform-origin: 50% 100%; transition: opacity 720ms var(--about-ease) var(--cell-delay), transform 820ms var(--about-ease), border-color 220ms ease, filter 300ms ease; }
+.zaeb-about-formation.is-scattering .zaeb-about-formation-side .zaeb-about-cell { opacity: 1; }
+.zaeb-about.is-grid-ready .zaeb-about-formation-left .zaeb-about-cell.is-visible { transform: translate3d(calc((1 - var(--about-progress, 0)) * -20vw), calc((1 - var(--about-progress, 0)) * 9rem), 0) rotateZ(calc((1 - var(--about-progress, 0)) * -8deg)) perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.88 + (var(--about-progress, 0) * .12))) !important; }
+.zaeb-about.is-grid-ready .zaeb-about-right .zaeb-about-cell.is-visible,
+.zaeb-about.is-grid-ready .zaeb-about-formation-right .zaeb-about-cell.is-visible { transform: translate3d(calc((1 - var(--about-progress, 0)) * -31vw), calc((1 - var(--about-progress, 0)) * 9rem), 0) rotateZ(calc((1 - var(--about-progress, 0)) * 10deg)) perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.88 + (var(--about-progress, 0) * .12))) !important; }
+.zaeb-about.is-grid-ready .zaeb-about-formation-left .zaeb-about-cell:nth-child(2).is-visible { transition-delay: calc(var(--cell-delay) + 90ms); }
+.zaeb-about.is-grid-ready .zaeb-about-formation-left .zaeb-about-cell:nth-child(3).is-visible { transition-delay: calc(var(--cell-delay) + 170ms); }
+.zaeb-about.is-grid-ready .zaeb-about-formation-right .zaeb-about-cell:nth-child(2).is-visible { transition-delay: calc(var(--cell-delay) + 110ms); }
+.zaeb-about.is-grid-ready .zaeb-about-formation-right .zaeb-about-cell:nth-child(3).is-visible { transition-delay: calc(var(--cell-delay) + 190ms); }
+.zaeb-about-formation .zaeb-about-cell.is-tilting { border-color: rgba(237,230,221,.86); background: linear-gradient(135deg, rgba(48,38,43,.96), rgba(30,27,32,.9)); box-shadow: 0 .7rem 1.5rem rgba(0,0,0,.24), inset 0 0 0 1px rgba(237,230,221,.08); transition: transform 140ms cubic-bezier(.22,.8,.22,1), border-color 180ms ease, background 180ms ease, box-shadow 180ms ease; }
+.zaeb-about-formation-left .zaeb-about-cell.is-tilting { transform: translate3d(calc((1 - var(--about-progress, 0)) * -20vw + .35rem), calc((1 - var(--about-progress, 0)) * 9rem - .18rem), 0) rotateZ(calc((1 - var(--about-progress, 0)) * -8deg - 1deg)) perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.88 + (var(--about-progress, 0) * .12))) !important; }
+.zaeb-about-formation-right .zaeb-about-cell.is-tilting { transform: translate3d(calc((1 - var(--about-progress, 0)) * -31vw - .35rem), calc((1 - var(--about-progress, 0)) * 9rem - .18rem), 0) rotateZ(calc((1 - var(--about-progress, 0)) * 10deg + 1deg)) perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.88 + (var(--about-progress, 0) * .12))) !important; }
+.zaeb-about-formation .zaeb-about-cell.is-hover-expanded { min-height: 7.2rem; transform-origin: 50% 100%; }
+.zaeb-about-formation .zaeb-about-cell.is-hover-expanded .zaeb-about-cell-summary, .zaeb-about-formation .zaeb-about-cell.is-hover-expanded .zaeb-about-cell-tags { animation: none; }
+.zaeb-about-formation .zaeb-about-cell.is-expanded { min-height: 11.5rem; transform: perspective(900px) rotateX(0) rotateY(0) scale(1.01) !important; }
+.zaeb-about-formation .zaeb-about-cell.is-expanded .zaeb-about-cell-summary { animation: about-tech-copy-in 480ms var(--about-ease) both; }
+@keyframes about-tech-copy-in { from { opacity: .2; transform: translateY(.6rem); letter-spacing: .03em; } to { opacity: 1; transform: translateY(0); letter-spacing: normal; } }
+.zaeb-about-me-card.is-visible .zaeb-about-cell-title, .zaeb-about-me-card.is-visible .zaeb-about-cell-summary, .zaeb-about-me-card.is-visible .zaeb-about-cell-tags { animation: about-paper-copy-in 720ms var(--about-ease) both; }
+.zaeb-about-me-card.is-visible .zaeb-about-cell-summary { animation-delay: 90ms; }
+@keyframes about-paper-copy-in { from { opacity: 0; transform: translateY(.45rem); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 980px) { .zaeb-about-formation-side { grid-template-rows: repeat(3, minmax(6.4rem, auto)); } .zaeb-about-formation .zaeb-about-formation-side .zaeb-about-cell { min-height: 6.4rem; } }
+@media (max-width: 760px) {
+  .zaeb-about-formation-side { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; gap: .6rem; }
+  .zaeb-about-formation .zaeb-about-formation-side .zaeb-about-cell, .zaeb-about-formation .zaeb-about-cell.is-hover-expanded { min-height: 8rem; }
+  .zaeb-about.is-grid-ready .zaeb-about-formation-left .zaeb-about-cell.is-visible, .zaeb-about.is-grid-ready .zaeb-about-formation-right .zaeb-about-cell.is-visible, .zaeb-about-formation-left .zaeb-about-cell.is-tilting, .zaeb-about-formation-right .zaeb-about-cell.is-tilting { transform: translate3d(0, calc((1 - var(--about-progress, 0)) * 2.2rem), 0) rotateZ(calc((1 - var(--about-progress, 0)) * 2deg)) perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.94 + (var(--about-progress, 0) * .06))) !important; }
+}
+@media (prefers-reduced-motion: reduce) { .zaeb-about-formation .zaeb-about-formation-side .zaeb-about-cell, .zaeb-about-formation .zaeb-about-cell.is-tilting { transform: none !important; transition: opacity 180ms ease, border-color 180ms ease; } .zaeb-about-me-card.is-visible .zaeb-about-cell-title, .zaeb-about-me-card.is-visible .zaeb-about-cell-summary, .zaeb-about-me-card.is-visible .zaeb-about-cell-tags { animation: none; } }
+
+
+/* about-tech-scatter-tuning-v2: weighted drag response, differentiated paths, and breakpoint-specific density. */
+.zaeb-about-formation .zaeb-about-cell.is-tilting { transform-origin: 50% 84%; transition: transform 180ms cubic-bezier(.18,.72,.24,1), border-color 220ms ease, background 220ms ease, box-shadow 220ms ease; }
+.zaeb-about-formation-left .zaeb-about-cell:nth-child(1).is-visible { --scatter-y: 10.6rem; --scatter-z: -7deg; }
+.zaeb-about-formation-left .zaeb-about-cell:nth-child(2).is-visible { --scatter-y: 9rem; --scatter-z: -3deg; }
+.zaeb-about-formation-left .zaeb-about-cell:nth-child(3).is-visible { --scatter-y: 7.4rem; --scatter-z: 2deg; }
+.zaeb-about-formation-right .zaeb-about-cell:nth-child(1).is-visible { --scatter-y: 9.8rem; --scatter-z: 9deg; }
+.zaeb-about-formation-right .zaeb-about-cell:nth-child(2).is-visible { --scatter-y: 8.2rem; --scatter-z: 5deg; }
+.zaeb-about-formation-right .zaeb-about-cell:nth-child(3).is-visible { --scatter-y: 6.6rem; --scatter-z: 1deg; }
+.zaeb-about.is-grid-ready .zaeb-about-formation-left .zaeb-about-cell.is-visible { transform: translate3d(calc((1 - var(--about-progress, 0)) * -18vw), calc((1 - var(--about-progress, 0)) * var(--scatter-y, 9rem)), 0) rotateZ(calc((1 - var(--about-progress, 0)) * var(--scatter-z, -5deg))) perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.9 + (var(--about-progress, 0) * .1))) !important; }
+.zaeb-about.is-grid-ready .zaeb-about-formation-right .zaeb-about-cell.is-visible { transform: translate3d(calc((1 - var(--about-progress, 0)) * -27vw), calc((1 - var(--about-progress, 0)) * var(--scatter-y, 8rem)), 0) rotateZ(calc((1 - var(--about-progress, 0)) * var(--scatter-z, 5deg))) perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.9 + (var(--about-progress, 0) * .1))) !important; }
+.zaeb-about-formation-left .zaeb-about-cell.is-tilting { transform: translate3d(calc((1 - var(--about-progress, 0)) * -18vw + .22rem), calc((1 - var(--about-progress, 0)) * var(--scatter-y, 9rem) - .14rem), 0) rotateZ(calc((1 - var(--about-progress, 0)) * var(--scatter-z, -5deg) - .7deg)) perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.9 + (var(--about-progress, 0) * .1))) !important; }
+.zaeb-about-formation-right .zaeb-about-cell.is-tilting { transform: translate3d(calc((1 - var(--about-progress, 0)) * -27vw - .22rem), calc((1 - var(--about-progress, 0)) * var(--scatter-y, 8rem) - .14rem), 0) rotateZ(calc((1 - var(--about-progress, 0)) * var(--scatter-z, 5deg) + .7deg)) perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.9 + (var(--about-progress, 0) * .1))) !important; }
+
+@media (min-width: 761px) and (max-width: 1120px) {
+  .zaeb-about-shell { width: min(100% - 2rem, 70rem); }
+  .zaeb-about-formation { grid-template-columns: minmax(11.5rem, 1fr) minmax(15.5rem, 18rem) minmax(11.5rem, 1fr); gap: .75rem; min-height: 29rem; }
+  .zaeb-about-formation-side { grid-template-rows: repeat(3, minmax(6.8rem, auto)); gap: .55rem; }
+  .zaeb-about-formation .zaeb-about-formation-side .zaeb-about-cell { min-height: 6.8rem; }
+  .zaeb-about-formation .zaeb-about-cell-inner { padding: .82rem .85rem; }
+  .zaeb-about-formation .zaeb-about-cell-title { margin-top: .6rem; font-size: .58rem; }
+  .zaeb-about-formation .zaeb-about-cell-summary { font-size: .7rem; line-height: 1.42; }
+  .zaeb-about.is-grid-ready .zaeb-about-formation-left .zaeb-about-cell.is-visible { transform: translate3d(calc((1 - var(--about-progress, 0)) * -12vw), calc((1 - var(--about-progress, 0)) * var(--scatter-y, 8rem)), 0) rotateZ(calc((1 - var(--about-progress, 0)) * var(--scatter-z, -5deg))) perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.92 + (var(--about-progress, 0) * .08))) !important; }
+  .zaeb-about.is-grid-ready .zaeb-about-formation-right .zaeb-about-cell.is-visible { transform: translate3d(calc((1 - var(--about-progress, 0)) * -18vw), calc((1 - var(--about-progress, 0)) * var(--scatter-y, 8rem)), 0) rotateZ(calc((1 - var(--about-progress, 0)) * var(--scatter-z, 5deg))) perspective(900px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.92 + (var(--about-progress, 0) * .08))) !important; }
+}
+@media (max-width: 760px) {
+  .zaeb-about-shell { width: min(100% - 1.1rem, 38rem); }
+  .zaeb-about-formation { gap: .9rem; }
+  .zaeb-about-formation-side { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+  .zaeb-about-formation .zaeb-about-formation-side .zaeb-about-cell { min-height: 7.6rem; }
+  .zaeb-about-formation .zaeb-about-cell-inner { padding: .78rem .72rem .82rem; }
+  .zaeb-about-formation .zaeb-about-cell-title { margin: .52rem 0 .38rem; font-size: .54rem; letter-spacing: .07em; }
+  .zaeb-about-formation .zaeb-about-cell-summary { font-size: .69rem; line-height: 1.35; }
+  .zaeb-about-formation .zaeb-about-cell-tags { gap: .25rem; padding-top: .55rem; font-size: .48rem; }
+  .zaeb-about-formation .zaeb-about-cell-tags span { padding: .2rem .28rem; }
+  .zaeb-about.is-grid-ready .zaeb-about-formation-left .zaeb-about-cell.is-visible, .zaeb-about.is-grid-ready .zaeb-about-formation-right .zaeb-about-cell.is-visible { transform: translate3d(0, calc((1 - var(--about-progress, 0)) * 2.5rem), 0) rotateZ(calc((1 - var(--about-progress, 0)) * var(--scatter-z, 2deg))) perspective(700px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.95 + (var(--about-progress, 0) * .05))) !important; }
+  .zaeb-about-formation-left .zaeb-about-cell.is-tilting, .zaeb-about-formation-right .zaeb-about-cell.is-tilting { transform: translate3d(0, calc((1 - var(--about-progress, 0)) * 2.5rem - .1rem), 0) rotateZ(calc((1 - var(--about-progress, 0)) * var(--scatter-z, 2deg))) perspective(700px) rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(calc(.95 + (var(--about-progress, 0) * .05))) !important; }
+}
+@media (max-width: 420px) {
+  .zaeb-about-formation-side { gap: .4rem; }
+  .zaeb-about-formation .zaeb-about-formation-side .zaeb-about-cell { min-height: 7.1rem; }
+  .zaeb-about-formation .zaeb-about-cell-inner { padding: .65rem .58rem .7rem; }
+  .zaeb-about-formation .zaeb-about-cell-summary { font-size: .63rem; }
+  .zaeb-about-formation .zaeb-about-cell-title { font-size: .5rem; }
+}
+
+
+/* glass-about-heading-handoff-v1 */
+.zaeb-about-shell { padding-top: clamp(4.8rem, 8vh, 6.5rem); }
+@media (max-width: 760px) { .zaeb-about-shell { padding-top: 4rem; } }
+@media (max-width: 420px) { .zaeb-about-shell { padding-top: 3.25rem; } }
+
+/* ─────────────────────────────────────────────────────────────────
+   Brief 05 — Big Intro + IDE-Style Tech Stack + Bio Pass Section
+   Themed to the 3 shades: #534843 (Dark Taupe), #9a857a (Sandstone), #dac6bd (Rose Cream)
+   ───────────────────────────────────────────────────────────────── */
+
+.zaeb-about {
+  min-height: 100svh !important;
+  clip-path: none !important;
+  background: transparent !important;
+  padding: 0 0 clamp(4rem, 8vh, 7rem) !important;
+  position: relative !important;
+}
+
+.zaeb-about-shell {
+  width: min(100% - 2.5rem, 82rem) !important;
+  min-height: auto !important;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vh, 5.5rem);
+}
+
+/* Header Meta */
+.zaeb-about-header-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(218, 198, 189, 0.25);
+  padding-bottom: 0.8rem;
+  margin-bottom: -1rem;
+}
+
+.zaeb-about-eyebrow {
+  margin: 0 !important;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem !important;
+  letter-spacing: 0.18em !important;
+  color: rgba(218, 198, 189, 0.85) !important;
+}
+
+.zaeb-about-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  color: #dac6bd;
+  background: rgba(83, 72, 67, 0.55);
+  border: 1px solid rgba(218, 198, 189, 0.35);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+
+.zaeb-status-dot {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: #dac6bd;
+  box-shadow: 0 0 6px #dac6bd;
+}
+
+/* 1. Big "About Me" Display Heading */
+.zaeb-about-hero-block {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+
+.zaeb-about-headline-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.zaeb-about-big-heading {
+  margin: 0;
+  font-family: var(--font-display-space), "Space Grotesk", sans-serif;
+  font-size: clamp(3.2rem, 7.8vw, 6.8rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.88;
+  color: #f6efe9;
+  text-shadow: 0 0 2.5rem rgba(154, 133, 122, 0.4);
+}
+
+.zaeb-heading-mask {
+  display: block;
+  overflow: hidden;
+}
+
+.zaeb-heading-line {
+  display: inline-block;
+}
+
+.zaeb-about-dialogue-statement {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-width: 52rem;
+}
+
+.zaeb-about-punchline {
+  margin: 0;
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(1.25rem, 2.3vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: #eedfd6;
+}
+
+.zaeb-highlight-text {
+  color: #dac6bd;
+  text-shadow: 0 0 12px rgba(218, 198, 189, 0.45);
+  font-style: italic;
+}
+
+.zaeb-about-lead-sub {
+  margin: 0;
+  font-size: clamp(0.92rem, 1.35vw, 1.12rem);
+  line-height: 1.6;
+  color: rgba(218, 198, 189, 0.8);
+  max-width: 46rem;
+}
+
+/* 2. IDE Section */
+.zaeb-about-ide-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  overflow: visible;
+  padding-bottom: 2rem;
+}
+
+.zaeb-ide-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.4rem;
+}
+
+.zaeb-ide-title-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #f6efe9;
+}
+
+.zaeb-ide-hint-text {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: rgba(218, 198, 189, 0.65);
+}
+
+/* 3. Developer Badge & Bio Pass Grid */
+.zaeb-about-pass-section {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.zaeb-about-pass-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.9fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.zaeb-about-bio-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: clamp(1.6rem, 3.2vw, 2.5rem);
+  border-radius: 0.85rem;
+  background: linear-gradient(145deg, rgba(83, 72, 67, 0.88), rgba(46, 39, 36, 0.95));
+  border: 1px solid rgba(218, 198, 189, 0.28);
+  box-shadow:
+    0 1rem 3rem rgba(0, 0, 0, 0.45),
+    0 0 2rem rgba(154, 133, 122, 0.12),
+    inset 0 1px 0 rgba(218, 198, 189, 0.12);
+}
+
+.zaeb-bio-card-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #dac6bd;
+  text-transform: uppercase;
+}
+
+.zaeb-bio-paragraph-lead {
+  margin: 0;
+  font-size: clamp(1.02rem, 1.5vw, 1.22rem);
+  font-weight: 500;
+  line-height: 1.55;
+  color: #f6efe9;
+}
+
+.zaeb-bio-paragraph-body {
+  margin: 0;
+  font-size: clamp(0.88rem, 1.2vw, 0.98rem);
+  line-height: 1.65;
+  color: rgba(218, 198, 189, 0.88);
+}
+
+.zaeb-bio-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 0.4rem;
+}
+
+.zaeb-bio-tag {
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.35rem;
+  background: rgba(154, 133, 122, 0.22);
+  border: 1px solid rgba(218, 198, 189, 0.35);
+  color: #f6efe9;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.zaeb-about-badge-column {
+  display: flex;
+  justify-content: center;
+}
+
+.zaeb-about-footer-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed rgba(218, 198, 189, 0.25);
+  color: rgba(218, 198, 189, 0.65);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+}
+
+.zaeb-about-next-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #dac6bd;
+}
+
+@media (max-width: 900px) {
+  .zaeb-about-pass-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Flat & Crisp Surface Overrides
+   ───────────────────────────────────────────────────────────────── */
+.zaeb-about {
+  perspective: none !important;
+  transform: none !important;
+  transform-style: flat !important;
+}
+
+.zaeb-about::before,
+.zaeb-about::after {
+  display: none !important;
+}
+
+.zaeb-about-shell,
+.zaeb-about-pass-section,
+.zaeb-about-ide-section {
+  position: relative;
+  z-index: 10;
+  perspective: none !important;
+  transform: none !important;
+  transform-style: flat !important;
+}
+
+.zaeb-about-big-heading {
+  font-family: var(--font-display-space), "Space Grotesk", sans-serif;
+  overflow: visible !important;
+}
+
+.zaeb-heading-mask {
+  overflow: visible !important;
+  line-height: 1.1 !important;
+  padding-bottom: 0.1em !important;
+}
+
+/* Developer Badge overrides for the 3-shade theme */
+.zaeb-developer-card {
+  background: linear-gradient(145deg, #534843, #332b27) !important;
+  border: 1px solid rgba(218, 198, 189, 0.42) !important;
+  box-shadow: 0 1.4rem 3rem rgba(0,0,0,0.5), 0 0 1.5rem rgba(154, 133, 122, 0.18) !important;
+}
+.zaeb-developer-card:hover,
+.zaeb-developer-card:focus-visible {
+  border-color: #dac6bd !important;
+  box-shadow: 0 1.8rem 3.6rem rgba(0,0,0,0.55), 0 0 1.8rem rgba(218, 198, 189, 0.35) !important;
+}
+.zaeb-developer-card::before {
+  border-color: rgba(218, 198, 189, 0.22) !important;
+}
+.zaeb-developer-portrait {
+  border: 1px solid rgba(218, 198, 189, 0.4) !important;
+  background: #211c19 !important;
+}
+.zaeb-developer-corner {
+  border-color: #dac6bd !important;
+}
+.zaeb-developer-card-head b,
+.zaeb-developer-name strong,
+.zaeb-developer-card-foot b {
+  color: #f6efe9 !important;
+}
+.zaeb-developer-card-head small,
+.zaeb-developer-nfc small,
+.zaeb-developer-card-foot {
+  color: rgba(218, 198, 189, 0.72) !important;
+}
+.zaeb-developer-name small {
+  border-color: rgba(218, 198, 189, 0.4) !important;
+  color: #dac6bd !important;
+}
+.zaeb-developer-tap {
+  background: rgba(83, 72, 67, 0.96) !important;
+  color: #f6efe9 !important;
+}
+.zaeb-developer-prompt {
+  color: rgba(218, 198, 189, 0.6) !important;
+}
+
+
+/* about-reference-balance-v1: charcoal, muted rose, taupe and cream balance. */
+.zaeb-about {
+  --about-bg: #171315;
+  --about-bg-deep: #0f0d10;
+  --about-accent: #4a1420;
+  --about-text: #f2e8e2;
+  --about-tungsten: #a49a94;
+  --about-tungsten-border: rgba(164, 154, 148, 0.52);
+}
+.zaeb-about-status-pill { color: #e6d8d1; background: rgba(74, 20, 32, 0.48); border-color: rgba(230, 216, 209, 0.32); }
+.zaeb-status-dot { background: #d7c8c0; box-shadow: 0 0 6px rgba(215, 200, 192, 0.72); }
+.zaeb-about-big-heading { text-shadow: 0 0 2.5rem rgba(74, 20, 32, 0.42); }
+.zaeb-highlight-text, .zaeb-about-next-cue { color: #d7c8c0; }
+.zaeb-about-punchline, .zaeb-bio-paragraph-lead { color: #f0e4de; }
+.zaeb-about-bio-card { background: linear-gradient(145deg, rgba(67, 52, 56, 0.92), rgba(27, 23, 26, 0.97)); border-color: rgba(215, 200, 192, 0.28); box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.45), 0 0 2rem rgba(74, 20, 32, 0.18), inset 0 1px 0 rgba(215, 200, 192, 0.12); }
+.zaeb-bio-card-header { color: #d7c8c0; }
+.zaeb-bio-paragraph-body { color: rgba(215, 200, 192, 0.84); }
+.zaeb-bio-tag { background: rgba(74, 20, 32, 0.34); border-color: rgba(215, 200, 192, 0.32); color: #f0e4de; }
+.zaeb-about-footer-line { border-top-color: rgba(215, 200, 192, 0.25); color: rgba(215, 200, 192, 0.62); }
+
+/* Restore the badge to the muted burgundy accent from the reference palette. */
+.zaeb-developer-card { background: linear-gradient(145deg, #4a1420, #24141a) !important; border-color: rgba(215, 200, 192, 0.58) !important; box-shadow: 0 1.4rem 3rem rgba(0,0,0,0.5), 0 0 1.5rem rgba(74, 20, 32, 0.3) !important; }
+.zaeb-developer-card:hover, .zaeb-developer-card:focus-visible { border-color: #f0e4de !important; box-shadow: 0 1.8rem 3.6rem rgba(0,0,0,0.55), 0 0 1.8rem rgba(215, 200, 192, 0.28) !important; }
+.zaeb-developer-portrait { border-color: rgba(215, 200, 192, 0.52) !important; background: #171315 !important; }
+.zaeb-developer-corner { border-color: #d7c8c0 !important; }
+.zaeb-developer-name small { border-color: rgba(215, 200, 192, 0.44) !important; color: #d7c8c0 !important; }
+.zaeb-developer-tap { background: rgba(74, 20, 32, 0.96) !important; color: #f0e4de !important; }
+
+
+/* Split Layout: Bio Plane + Stack/Badge Two-Column */
+.zaeb-about-bio-plane {
+  position: relative;
+  width: min(100%, 68rem);
+  margin: 2rem auto 3.5rem;
+  padding: clamp(1.2rem, 2.5vw, 2rem);
+  border: 1px solid rgba(156, 145, 135, 0.4);
+  border-radius: 0.5rem;
+  background: rgba(30, 27, 32, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.zaeb-bio-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+  color: rgba(237, 230, 221, 0.7);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.zaeb-bio-lead {
+  margin: 0 0 1rem;
+  color: var(--about-text);
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  line-height: 1.5;
+}
+
+.zaeb-bio-body {
+  margin: 0 0 1.5rem;
+  color: rgba(237, 230, 221, 0.85);
+  font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+  line-height: 1.65;
+}
+
+.zaeb-bio-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.zaeb-bio-tag {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(156, 145, 135, 0.4);
+  border-radius: 0.25rem;
+  color: rgba(237, 230, 221, 0.75);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.zaeb-about-split-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
+  margin-top: 4rem;
+}
+
+.zaeb-about-stack-column {
+  position: relative;
+  min-width: 0;
+}
+
+.zaeb-about-badge-column {
+  position: relative;
+  min-width: 0;
+}
+
+.zaeb-badge-sticky-wrapper {
+  position: sticky;
+  top: clamp(6rem, 12vh, 9rem);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .zaeb-about-split-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .zaeb-badge-sticky-wrapper {
+    position: relative;
+    top: auto;
+    margin: 0 auto;
+  }
+
+  .zaeb-about-badge-column {
+    order: -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .zaeb-about-bio-plane {
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .zaeb-bio-lead {
+    font-size: 1rem;
+  }
+
+  .zaeb-bio-body {
+    font-size: 0.88rem;
+  }
+}

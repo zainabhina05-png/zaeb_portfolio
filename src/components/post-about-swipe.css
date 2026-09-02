@@ -1,0 +1,220 @@
+.post-about-swipe {
+  position: relative;
+  isolation: isolate;
+  background: var(--color-brand-bg);
+}
+
+.post-about-live-index {
+  position: fixed;
+  z-index: 28;
+  top: 50%;
+  right: clamp(0.75rem, 2.3vw, 2.35rem);
+  display: grid;
+  gap: 0.22rem;
+  width: 1.75rem;
+  color: var(--color-brand-primary);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.52rem;
+  letter-spacing: 0.14em;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.92);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.post-about-live-index.is-visible {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.post-about-live-index span { color: var(--color-brand-brass-hot); }
+.post-about-live-index i { display: block; width: 1px; height: 2.5rem; margin: 0.2rem auto; background: linear-gradient(var(--color-brand-brass), transparent); }
+.post-about-live-index b { writing-mode: vertical-rl; font-weight: 500; }
+
+.post-about-scene {
+  --scene-x: 0%;
+  --scene-y: 0%;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  position: relative;
+  min-height: max(100svh, 53rem);
+  overflow: clip;
+  background: var(--color-brand-bg);
+  border-top: 1px dashed rgba(184, 146, 90, 0.32);
+  isolation: isolate;
+}
+
+.post-about-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background: linear-gradient(90deg, rgba(19, 10, 12, 0.86), rgba(19, 10, 12, 0.48) 48%, rgba(19, 10, 12, 0.83));
+}
+
+.post-about-artifact {
+  position: absolute;
+  inset: -8%;
+  z-index: -2;
+  background-repeat: no-repeat;
+  background-position: calc(50% + var(--scene-x)) calc(50% + var(--scene-y));
+  background-size: cover;
+  opacity: 0.58;
+  filter: saturate(0.68) contrast(1.06);
+  transition: transform 660ms var(--ease-v3-reveal), background-position 700ms var(--ease-v3-micro);
+}
+
+.post-about-scene[data-scene="starline"] .post-about-artifact { background-image: url("/living-artifacts/experience-starline.webp"); }
+.post-about-scene[data-scene="constellation"] .post-about-artifact { background-image: url("/living-artifacts/constellation-field.webp"); opacity: 0.62; }
+.post-about-scene[data-scene="orbit"] .post-about-artifact { background-image: url("/living-artifacts/projects-orbit.webp"); }
+.post-about-scene[data-scene="archive"] .post-about-artifact { background-image: url("/living-artifacts/archive-layers.webp"); opacity: 0.66; }
+.post-about-scene[data-scene="botanical"] .post-about-artifact { background-image: url("/living-artifacts/credentials-botanical.webp"); opacity: 0.48; }
+
+.post-about-scene[data-layout="dossier"]::before { background: linear-gradient(109deg, rgba(19, 10, 12, 0.96), rgba(46, 16, 22, 0.62) 48%, rgba(19, 10, 12, 0.9)); }
+.post-about-scene[data-layout="constellation"]::before { background: radial-gradient(circle at 68% 50%, rgba(107, 33, 38, 0.2), transparent 34%), linear-gradient(90deg, rgba(19, 10, 12, 0.92), rgba(19, 10, 12, 0.62)); }
+.post-about-scene[data-layout="projects"]::before { background: linear-gradient(180deg, rgba(19, 10, 12, 0.8), rgba(46, 16, 22, 0.34) 50%, rgba(19, 10, 12, 0.92)); }
+.post-about-scene[data-layout="archive"]::before { background: linear-gradient(90deg, rgba(19, 10, 12, 0.94), rgba(25, 17, 17, 0.7) 58%, rgba(19, 10, 12, 0.58)); }
+
+.post-about-scene-content {
+  position: relative;
+  z-index: 2;
+  min-height: inherit;
+  transform: perspective(1500px) rotateY(calc(var(--tilt-x) * 0.9)) rotateX(calc(var(--tilt-y) * -0.75));
+  transform-style: preserve-3d;
+  transition: transform 520ms var(--ease-v3-micro);
+}
+
+.post-about-cutline {
+  position: absolute;
+  z-index: 1;
+  width: min(68vw, 74rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 184, 118, 0.7), transparent);
+  transform: rotate(-10deg) translateX(calc(var(--scene-x) * 1.8));
+  opacity: 0.6;
+}
+.post-about-cutline--top { top: 17%; left: -8%; }
+.post-about-cutline--bottom { right: -12%; bottom: 14%; transform: rotate(-10deg) translateX(calc(var(--scene-x) * -1.2)); }
+
+.post-about-index {
+  position: absolute;
+  z-index: 3;
+  top: clamp(4.5rem, 9vw, 8rem);
+  left: clamp(1.3rem, 6.2vw, 8rem);
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--color-brand-brass-hot);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
+}
+.post-about-index i { display: block; width: clamp(2rem, 5vw, 4.4rem); height: 1px; background: currentColor; opacity: 0.75; }
+.post-about-caption { position: absolute; z-index: 3; top: clamp(4.5rem, 9vw, 8rem); right: clamp(3.8rem, 7vw, 9rem); color: rgba(255, 253, 249, 0.52); font-family: var(--font-mono, monospace); font-size: 0.53rem; letter-spacing: 0.16em; }
+
+.post-about-title-cut {
+  position: absolute;
+  z-index: 0;
+  top: clamp(7rem, 10vw, 10rem);
+  left: clamp(-0.5rem, 2vw, 2rem);
+  width: min-content;
+  margin: 0;
+  color: rgba(255, 253, 249, 0.055);
+  font-family: var(--font-display-cinzel, Georgia, serif);
+  font-size: clamp(4.6rem, 13vw, 14rem);
+  font-weight: 500;
+  line-height: 0.72;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+  transform: translateX(calc(var(--scene-x) * 1.7));
+}
+
+.post-about-cue {
+  position: absolute;
+  z-index: 4;
+  right: clamp(3.5rem, 7.5vw, 10rem);
+  bottom: clamp(3rem, 8vw, 7.5rem);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(232, 184, 118, 0.76);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  writing-mode: vertical-rl;
+}
+.post-about-cue span { font-size: 1rem; }
+
+.post-about-orbit {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: -8vw;
+  width: min(32vw, 32rem);
+  aspect-ratio: 1;
+  border: 1px solid rgba(184, 146, 90, 0.19);
+  border-radius: 50%;
+  transform: translateY(-50%) rotate(calc(var(--tilt-x) * 4)) scale(calc(0.92 + var(--scene-y) / 100));
+  transition: transform 700ms var(--ease-v3-micro);
+}
+.post-about-orbit::before, .post-about-orbit::after { content: ""; position: absolute; border: inherit; border-radius: inherit; }
+.post-about-orbit::before { inset: 12%; }
+.post-about-orbit::after { inset: 28%; border-style: dashed; }
+
+/* Dossier: diagonal title cut and two record sheets at different depths. */
+.post-about-scene[data-layout="dossier"] .post-about-chapter-group { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr); align-items: start; gap: clamp(0.75rem, 4vw, 5rem); width: min(100%, 86rem); margin: 0 auto; padding: clamp(12rem, 17vw, 15rem) clamp(1.15rem, 5vw, 5rem) 6rem; }
+.post-about-scene[data-layout="dossier"] #experience { z-index: 2; padding: clamp(3rem, 6vw, 5rem) !important; background: rgba(19, 10, 12, 0.6) !important; border: 1px solid rgba(184, 146, 90, 0.36) !important; clip-path: polygon(0 0, 100% 4%, 96% 100%, 2% 96%); transform: translateZ(34px) rotate(-1.1deg); }
+.post-about-scene[data-layout="dossier"] #leadership { z-index: 1; margin-top: clamp(6rem, 12vw, 12rem); padding: clamp(2rem, 4vw, 3.5rem) !important; background: rgba(46, 16, 22, 0.42) !important; border: 1px solid rgba(184, 146, 90, 0.24) !important; clip-path: polygon(4% 0, 100% 0, 96% 95%, 0 100%); transform: translateZ(8px) rotate(1.4deg); }
+
+/* Constellation: the skill content floats on the clear field, with an orbiting stage rather than a card stack. */
+.post-about-scene[data-layout="constellation"] #skills { min-height: 100svh; padding-top: clamp(13rem, 17vw, 16rem) !important; padding-bottom: 7rem !important; background: transparent !important; border-color: rgba(184, 146, 90, 0.32) !important; }
+.post-about-scene[data-layout="constellation"] #skills > div { position: relative; z-index: 2; transform: translateZ(24px); }
+.post-about-scene[data-layout="constellation"] #skills .interactive-card { background: rgba(19, 10, 12, 0.5) !important; border-color: rgba(184, 146, 90, 0.3) !important; }
+
+/* Projects: wide stacking panels cross each other while a single feature remains dominant. */
+.post-about-scene[data-layout="projects"] #projects { min-height: 110svh; padding-top: clamp(12.5rem, 16vw, 15rem) !important; padding-bottom: 8rem !important; background: transparent !important; border-color: rgba(184, 146, 90, 0.28) !important; }
+.post-about-scene[data-layout="projects"] #projects > div { position: relative; z-index: 2; transform: translateZ(36px); }
+.post-about-scene[data-layout="projects"] #projects .interactive-card { background: rgba(19, 10, 12, 0.66) !important; border-color: rgba(184, 146, 90, 0.36) !important; transform: perspective(1200px) rotateY(calc(var(--tilt-x) * 0.7)) translateY(calc(var(--scene-y) * 0.55)); transition: transform 460ms var(--ease-v3-micro), border-color 260ms var(--ease-v3-micro); }
+.post-about-scene[data-layout="projects"] #projects .interactive-card:nth-child(even) { margin-left: clamp(0rem, 8vw, 9rem); }
+.post-about-scene[data-layout="projects"] #projects .interactive-card:nth-child(odd) { margin-right: clamp(0rem, 8vw, 9rem); }
+
+/* Archive: education, certificates, and resume are overlapping clipped documents; existing content remains untouched. */
+.post-about-scene[data-layout="archive"] .post-about-chapter-group { display: grid; gap: 0; width: min(100%, 88rem); margin: 0 auto; padding: clamp(12rem, 17vw, 15rem) clamp(1.15rem, 5vw, 5rem) 7rem; }
+.post-about-scene[data-layout="archive"] #education, .post-about-scene[data-layout="archive"] #certifications, .post-about-scene[data-layout="archive"] #resume { position: relative; padding: clamp(2.5rem, 5vw, 5rem) !important; background: rgba(19, 10, 12, 0.61) !important; border: 1px solid rgba(184, 146, 90, 0.3) !important; }
+.post-about-scene[data-layout="archive"] #education { z-index: 3; width: 82%; clip-path: polygon(0 2%, 99% 0, 96% 97%, 3% 100%); transform: translateZ(38px) rotate(-1deg); }
+.post-about-scene[data-layout="archive"] #certifications { z-index: 2; width: 82%; justify-self: end; margin-top: -3rem; clip-path: polygon(4% 0, 100% 3%, 97% 100%, 0 96%); transform: translateZ(20px) rotate(1.25deg); }
+.post-about-scene[data-layout="archive"] #resume { z-index: 1; width: 76%; margin-top: -2rem; clip-path: polygon(0 3%, 98% 0, 100% 96%, 2% 100%); transform: translateZ(6px) rotate(-0.45deg); }
+
+.post-about-scene[data-layout="contact"] footer { min-height: 100svh; padding-top: clamp(12rem, 17vw, 15rem) !important; background: transparent !important; border-color: rgba(184, 146, 90, 0.28) !important; }
+.post-about-scene[data-layout="contact"] footer > div { position: relative; z-index: 2; transform: translateZ(24px); }
+
+@media (max-width: 880px) {
+  .post-about-caption { display: none; }
+  .post-about-scene[data-layout="dossier"] .post-about-chapter-group { grid-template-columns: 1fr; padding-top: 10rem; }
+  .post-about-scene[data-layout="dossier"] #leadership { margin-top: -1.5rem; }
+  .post-about-scene[data-layout="archive"] #education, .post-about-scene[data-layout="archive"] #certifications, .post-about-scene[data-layout="archive"] #resume { width: 100%; margin-top: -0.8rem; transform: none; }
+  .post-about-live-index { right: 0.35rem; }
+}
+
+@media (max-width: 640px) {
+  .post-about-scene { min-height: auto; }
+  .post-about-scene-content { transform: none !important; }
+  .post-about-scene[data-layout="dossier"] .post-about-chapter-group, .post-about-scene[data-layout="archive"] .post-about-chapter-group { padding: 8rem 1rem 4rem; }
+  .post-about-title-cut { top: 4.5rem; font-size: clamp(3.4rem, 21vw, 6rem); }
+  .post-about-index { top: 3rem; left: 1rem; }
+  .post-about-cue { right: 1rem; bottom: 2rem; }
+  .post-about-orbit { width: 58vw; right: -20vw; }
+  .post-about-live-index { display: none; }
+  .post-about-scene[data-layout="dossier"] #experience, .post-about-scene[data-layout="dossier"] #leadership { transform: none; }
+  .post-about-scene[data-layout="projects"] #projects, .post-about-scene[data-layout="constellation"] #skills, .post-about-scene[data-layout="contact"] footer { min-height: auto; padding-top: 8rem !important; }
+  .post-about-scene[data-layout="projects"] #projects .interactive-card:nth-child(even), .post-about-scene[data-layout="projects"] #projects .interactive-card:nth-child(odd) { margin-inline: 0; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-about-artifact, .post-about-scene-content, .post-about-orbit, .post-about-cutline, .post-about-title-cut { transition: none !important; transform: none !important; }
+}

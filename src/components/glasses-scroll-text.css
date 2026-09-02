@@ -1,0 +1,1429 @@
+/* ─────────────────────────────────────────────────────────────────
+   ZAEB Glasses Scroll Text — Motion for React Scroll Text Lines
+   Ornate Wayfarer optics with precision lens magnification
+   ───────────────────────────────────────────────────────────────── */
+
+:root {
+  --zaeb-glass-ember: #e0455f;
+  --zaeb-glass-rose: #f2a6b9;
+  --zaeb-glass-tungsten: #9c9187;
+  --zaeb-glass-void: #090a0f;
+}
+
+/* ── Hero → Glasses Parallax Bridge Strip ── */
+.zaeb-glasses-bridge {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: clamp(2rem, 4vh, 4rem);
+  overflow: hidden;
+  background: #06070a;
+}
+
+.zaeb-glasses-bridge-inner {
+  position: absolute;
+  inset: -20%;
+  will-change: transform, opacity;
+}
+
+.zaeb-glasses-bridge-dots {
+  position: absolute;
+  inset: 0;
+  opacity: 0.28;
+  background-image: radial-gradient(circle, rgba(156, 145, 135, 0.52) 1px, transparent 1.3px);
+  background-size: 18px 18px;
+  background-position: center center;
+  mask-image:
+    linear-gradient(90deg, transparent, black 14%, black 86%, transparent),
+    linear-gradient(180deg, transparent, black 24%, black 76%, transparent);
+  mask-composite: intersect;
+}
+
+.zaeb-glasses-bridge-vignette {
+  position:absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(50, 6, 7, 0.294), transparent 62%),
+    linear-gradient(180deg, rgba(13, 14, 16, 0.9) 0%, rgba(8,10,15,0.4) 40%, rgba(8,10,15,0.4) 60%, rgba(8,10,15,0.9) 100%);
+}
+
+/* ── Section container — tight flush to adjacent sections ── */
+.zaeb-glasses-gap {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: clamp(18rem, 40vh, 28rem);
+  margin: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #ede6dd;
+  background: radial-gradient(circle at 50% 50%, rgba(43, 16, 22, 0.55) 0%, #0a0a0d 65%, #0a0a0d 100%);
+  border-top: none;
+  border-bottom: none;
+}
+
+/* Micro-dot optic grid texture */
+.zaeb-glasses-gap::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0.15;
+  background-image: radial-gradient(circle, rgba(156, 145, 135, 0.6) 1px, transparent 1.2px);
+  background-size: 20px 20px;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 20%, transparent 85%);
+}
+
+/* Ember atmosphere core */
+.zaeb-glasses-gap::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, rgba(178, 58, 78, 0.14) 0%, transparent 60%);
+}
+
+/* ── Stage ── */
+.zaeb-glasses-stage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: clamp(16rem, 36vh, 25rem);
+  overflow: hidden;
+}
+
+/* ── Ambient background text streams ── */
+.zaeb-glasses-streams {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.8rem;
+  opacity: 0.18;
+  pointer-events: none;
+  user-select: none;
+}
+
+.zaeb-glasses-stream {
+  width: max-content;
+  white-space: nowrap;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: clamp(0.74rem, 1.25vw, 1.05rem);
+  font-weight: 500;
+  color: rgba(215, 215, 210, 0.75);
+}
+
+/* ── Glasses object container ── */
+.zaeb-glasses-object {
+  position: relative;
+  z-index: 2;
+  width: min(90vw, 50rem);
+  aspect-ratio: 1657 / 800;
+  display: grid;
+  place-items: center;
+  user-select: none;
+}
+
+/* ── Hidden SVG filter defs ── */
+.zaeb-glasses-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ── Lens text overlay container ── */
+.zaeb-glasses-lens-text {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Lens panes — shifted to align with frame apertures ── */
+.zaeb-glasses-lens-pane {
+  position: absolute;
+  top: 19%;
+  bottom: 24%;
+  width: 27.5%;
+  overflow: hidden;
+  border-radius: 58% 57% 42% 56% / 44% 48% 48% 49%;
+  background: rgba(15, 6, 10, 0.88);
+  border: 1px solid rgba(168, 50, 74, 0.38);
+  box-shadow:
+    0 0 1.8rem rgba(140, 36, 56, 0.32),
+    inset 0 0 1.4rem rgba(168, 50, 74, 0.22);
+}
+
+.zaeb-glasses-lens-pane-left {
+  left: 18.6%;
+}
+
+.zaeb-glasses-lens-pane-right {
+  left: 56.8%;
+}
+
+/* Radial glare reflection */
+.zaeb-lens-radial-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 68% 28%, rgba(255, 255, 255, 0.16) 0%, transparent 48%);
+  mix-blend-mode: screen;
+}
+
+/* ── Inner track ── */
+.zaeb-glasses-lens-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.4rem;
+  transform: scale(1.08);
+  transform-origin: 50% 50%;
+}
+
+/* Lens highlight text — mono font, reduced size to avoid mid-word crop */
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  font-size: clamp(0.54rem, 0.9vw, 0.72rem);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  white-space: nowrap;
+  color: #fff2f6;
+  text-shadow:
+    0 0 0.45rem rgba(168, 50, 74, 0.9),
+    0 0 1.2rem rgba(140, 36, 56, 0.7),
+    0 0 2rem rgba(140, 36, 56, 0.4);
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream strong {
+  font-weight: 800;
+  color: #ffffff;
+}
+
+/* ── Frame image — mix-blend-mode: multiply removes white background letters ── */
+.zaeb-glasses-reference-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center 40%;
+  pointer-events: none;
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 1.2rem 2.4rem rgba(0, 0, 0, 0.85)) brightness(1.05) contrast(1.04);
+}
+
+/* ── Lens sheen glint animation ── */
+.zaeb-glasses-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.05) 36%,
+    rgba(255, 235, 245, 0.42) 48%,
+    rgba(255, 255, 255, 0.06) 58%,
+    transparent 76%
+  );
+  mix-blend-mode: screen;
+  animation: zaeb-lens-glint 6s ease-in-out infinite;
+}
+
+/* ── Caption line ── */
+.zaeb-glasses-caption-line {
+  position: absolute;
+  bottom: -2.4rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: rgba(242, 166, 185, 0.48);
+  text-transform: uppercase;
+}
+
+@keyframes zaeb-lens-glint {
+  0%, 100% { transform: translateX(-12%); opacity: 0.35; }
+  50% { transform: translateX(12%); opacity: 0.88; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .zaeb-glasses-gap { min-height: 24rem; }
+  .zaeb-glasses-stage { min-height: 20rem; }
+  .zaeb-glasses-object { width: min(94vw, 36rem); }
+  .zaeb-glasses-streams { gap: 1.3rem; }
+  .zaeb-glasses-lens-track { gap: 1.3rem; transform: scale(1.12); }
+  .zaeb-glasses-lens-pane { width: 29.5%; }
+  .zaeb-glasses-lens-pane-left { left: 15%; }
+  .zaeb-glasses-lens-pane-right { right: 15%; }
+  .zaeb-glasses-bridge { height: 5rem; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-gap { min-height: 19rem; }
+  .zaeb-glasses-stage { min-height: 16rem; }
+  .zaeb-glasses-object { width: 95vw; }
+  .zaeb-glasses-streams { gap: 0.95rem; }
+  .zaeb-glasses-lens-track { gap: 0.95rem; transform: scale(1.08); }
+  .zaeb-glasses-stream { font-size: 0.6rem; }
+  .zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight { font-size: 0.62rem; }
+  .zaeb-glasses-caption-line { font-size: 0.5rem; bottom: -1.8rem; }
+  .zaeb-glasses-bridge { height: 4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zaeb-glasses-sheen { animation: none; opacity: 0.45; }
+  .zaeb-glasses-bridge-inner { transform: none !important; opacity: 1 !important; }
+}
+
+
+/* glasses-reference-palette-v1: warm ivory surface with crimson and black typography. */
+.zaeb-glasses-gap {
+  --glass-void: #0a0303;
+  --glass-obsidian: #15161d;
+  --glass-crimson: #5a0a12;
+  --glass-blood: #330308;
+  --glass-rose: #866e70;
+  --glass-beige: #d5c5ba;
+  --glass-ivory: #f3f4f2;
+  min-height: clamp(23rem, 48vh, 34rem) !important;
+  color: var(--glass-void) !important;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(213, 197, 186, 0.92), transparent 62%),
+    linear-gradient(135deg, var(--glass-ivory) 0%, var(--glass-beige) 58%, #c9b6ad 100%) !important;
+}
+
+.zaeb-glasses-gap::before {
+  opacity: 0.28;
+  background-image: radial-gradient(circle, rgba(57, 54, 59, 0.3) 1px, transparent 1.2px);
+}
+
+.zaeb-glasses-gap::after {
+  background: radial-gradient(ellipse at 50% 50%, rgba(90, 10, 18, 0.12) 0%, transparent 62%);
+}
+
+.zaeb-glasses-stage {
+  min-height: clamp(21rem, 44vh, 31rem);
+}
+
+.zaeb-glasses-streams {
+  opacity: 0.42;
+}
+
+.zaeb-glasses-stream {
+  color: rgba(10, 3, 3, 0.68);
+}
+
+.zaeb-glasses-lens-pane {
+  background: rgba(10, 3, 3, 0.92);
+  border-color: rgba(90, 10, 18, 0.72);
+  box-shadow: 0 0 1.8rem rgba(90, 10, 18, 0.26), inset 0 0 1.4rem rgba(134, 110, 112, 0.14);
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  color: #d5c5ba;
+  text-shadow: 0 0 0.45rem rgba(90, 10, 18, 0.92), 0 0 1.2rem rgba(90, 10, 18, 0.62);
+}
+
+.zaeb-glasses-lens-pane-left .zaeb-lens-highlight,
+.zaeb-glasses-lens-pane-left .zaeb-glasses-stream strong {
+  color: #c41427;
+}
+
+.zaeb-glasses-lens-pane-right .zaeb-lens-highlight,
+.zaeb-glasses-lens-pane-right .zaeb-glasses-stream strong {
+  color: #f3f4f2;
+}
+
+.zaeb-glasses-reference-frame {
+  filter: drop-shadow(0 1.2rem 2.4rem rgba(10, 3, 3, 0.38)) brightness(0.72) contrast(1.14) saturate(0.82);
+}
+
+.zaeb-glasses-sheen {
+  background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.12) 36%, rgba(90, 10, 18, 0.24) 48%, rgba(255, 255, 255, 0.12) 58%, transparent 76%);
+}
+
+.zaeb-glasses-caption-line {
+  color: rgba(10, 3, 3, 0.78);
+}
+
+.zaeb-glasses-caption-line span:first-child {
+  color: var(--glass-crimson);
+}
+
+@media (max-width: 860px) {
+  .zaeb-glasses-gap { min-height: 27rem !important; }
+  .zaeb-glasses-stage { min-height: 23rem; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-gap { min-height: 22rem !important; }
+  .zaeb-glasses-stage { min-height: 19rem; }
+}
+
+
+/* glasses-alternating-lens-words-v1: explicit red/black rhythm inside both lenses. */
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight .zaeb-lens-word {
+  display: inline;
+  transition: color 180ms ease, text-shadow 180ms ease;
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight .zaeb-lens-word-red {
+  color: #c41427 !important;
+  text-shadow: 0 0 0.45rem rgba(90, 10, 18, 0.68), 0 0 1.1rem rgba(90, 10, 18, 0.32);
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight .zaeb-lens-word-black {
+  color: #0a0303 !important;
+  text-shadow: none;
+}
+
+.zaeb-glasses-lens-pane-right .zaeb-glasses-stream.zaeb-lens-highlight .zaeb-lens-word-black {
+  color: #0a0303 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight .zaeb-lens-word { transition: none; }
+}
+
+
+/* glasses-lens-material-v2: light lens interiors, bold type, gold/silver glass reflection. */
+.zaeb-glasses-lens-pane {
+  background:
+    linear-gradient(145deg, rgba(243, 244, 242, 0.96), rgba(213, 197, 186, 0.94) 58%, rgba(198, 185, 177, 0.96)) !important;
+  border-color: rgba(90, 10, 18, 0.72) !important;
+  box-shadow:
+    0 0 1.5rem rgba(213, 197, 186, 0.52),
+    inset 0 0 1.25rem rgba(255, 255, 255, 0.58),
+    inset 0 -0.45rem 1rem rgba(90, 10, 18, 0.12) !important;
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  font-weight: 850 !important;
+  letter-spacing: 0.075em;
+  text-shadow: 0 0 0.3rem rgba(255, 255, 255, 0.5) !important;
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight strong {
+  font-weight: 900 !important;
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight .zaeb-lens-word-red {
+  color: #5a0a12 !important;
+  text-shadow: 0 0 0.35rem rgba(90, 10, 18, 0.24) !important;
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight .zaeb-lens-word-black {
+  color: #0a0303 !important;
+  text-shadow: 0 0 0.2rem rgba(255, 255, 255, 0.42) !important;
+}
+
+.zaeb-lens-radial-glare {
+  background: radial-gradient(circle at 68% 24%, rgba(255, 255, 255, 0.62) 0%, rgba(245, 245, 240, 0.18) 26%, transparent 58%) !important;
+  mix-blend-mode: screen;
+}
+
+.zaeb-glasses-sheen {
+  background: linear-gradient(
+    115deg,
+    transparent 16%,
+    rgba(214, 179, 106, 0.08) 30%,
+    rgba(214, 179, 106, 0.48) 42%,
+    rgba(255, 255, 255, 0.86) 49%,
+    rgba(198, 203, 210, 0.62) 55%,
+    rgba(255, 255, 255, 0.18) 64%,
+    transparent 80%
+  ) !important;
+  mix-blend-mode: soft-light;
+  animation-duration: 7.5s;
+}
+
+.zaeb-glasses-reference-frame {
+  filter: drop-shadow(0 1.2rem 2.4rem rgba(10, 3, 3, 0.32)) brightness(0.78) contrast(1.12) saturate(0.74) !important;
+}
+
+
+/* glasses-hero-overlap-y2k-v1: rising overlap transition and retro-futurist frame treatment. */
+.zaeb-glasses-gap {
+  z-index: 30;
+  margin-top: clamp(-9rem, -13vh, -5rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 1.8rem 1.8rem 0 0;
+  box-shadow: 0 -1.5rem 3.5rem rgba(10, 3, 3, 0.18);
+}
+
+.zaeb-glasses-overlap-shell {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight,
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight strong,
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight .zaeb-lens-word {
+  font-weight: 900 !important;
+}
+
+.zaeb-glasses-y2k-gloss {
+  position: absolute;
+  inset: 3.7% 2.8% 17%;
+  z-index: 5;
+  pointer-events: none;
+  border: 2px solid transparent;
+  border-radius: 18% 22% 26% 18% / 32% 28% 26% 30%;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.88), rgba(214,179,106,0.82) 18%, rgba(198,203,210,0.55) 38%, transparent 56%, rgba(255,255,255,0.66) 74%, rgba(214,179,106,0.72)) border-box;
+  -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.74;
+  filter: drop-shadow(0 0 0.55rem rgba(255,255,255,0.46)) drop-shadow(0 0 0.7rem rgba(214,179,106,0.3));
+  mix-blend-mode: screen;
+  transform: rotate(-0.6deg) scale(1.015);
+}
+
+.zaeb-glasses-y2k-gloss::after {
+  position: absolute;
+  inset: 8% 12%;
+  content: "";
+  border-top: 1px solid rgba(255,255,255,0.86);
+  border-bottom: 1px solid rgba(214,179,106,0.72);
+  border-radius: 50%;
+  opacity: 0.7;
+  transform: skewX(-18deg) rotate(-8deg);
+}
+
+.zaeb-glasses-reference-frame {
+  filter: drop-shadow(0 1.2rem 2.4rem rgba(10, 3, 3, 0.3)) brightness(0.84) contrast(1.16) saturate(0.68) hue-rotate(156deg) !important;
+}
+
+@media (max-width: 860px) {
+  .zaeb-glasses-gap { margin-top: -4rem; }
+  .zaeb-glasses-y2k-gloss { inset: 3.7% 2% 17%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zaeb-glasses-overlap-shell { transform: none !important; }
+}
+
+
+/* glasses-independent-flow-v1: Glasses begins after Hero and owns its full viewport height. */
+.zaeb-glasses-gap {
+  margin-top: 0 !important;
+  min-height: 100svh !important;
+  height: 100svh;
+  padding: clamp(2rem, 6vh, 5rem) 0 !important;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.zaeb-glasses-overlap-shell {
+  min-height: 100%;
+  display: grid;
+  align-items: center;
+}
+
+.zaeb-glasses-stage {
+  width: min(100%, 72rem);
+  min-height: min(78svh, 48rem);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 4rem);
+}
+
+.zaeb-glasses-object {
+  width: min(92vw, 58rem);
+}
+
+@media (max-width: 860px) {
+  .zaeb-glasses-gap {
+    min-height: 100svh !important;
+    height: 100svh;
+    padding-block: 2rem !important;
+  }
+  .zaeb-glasses-stage { min-height: 76svh; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-gap {
+    min-height: 100svh !important;
+    height: 100svh;
+    padding-block: 1.25rem !important;
+  }
+  .zaeb-glasses-stage { min-height: 72svh; padding-inline: 0.5rem; }
+}
+
+
+/* glasses-know-me-better-v2: full-width staged reveal with neutral frame treatment. */
+.zaeb-glasses-gap {
+  min-height: 100svh !important;
+  height: 100svh;
+  width: 100%;
+  padding: 0 !important;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 46%, rgba(243, 244, 242, 0.96), transparent 64%),
+    linear-gradient(135deg, #f3f4f2 0%, #d5c5ba 58%, #c9b6ad 100%) !important;
+}
+
+.zaeb-glasses-stage {
+  position: relative;
+  width: 100vw !important;
+  min-height: 100% !important;
+  height: 100%;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.zaeb-glasses-know-title {
+  position: absolute;
+  top: clamp(2.5rem, 9vh, 7rem);
+  left: 50%;
+  z-index: 3;
+  width: 100%;
+  margin: 0;
+  color: #0a0303;
+  font-family: var(--font-display-space, "Space Grotesk", sans-serif);
+  font-size: clamp(3rem, 9vw, 8rem);
+  font-weight: 900;
+  letter-spacing: -0.075em;
+  line-height: 0.88;
+  text-align: center;
+  transform: translateX(-50%);
+  text-shadow: 0 0.12rem 0 rgba(255,255,255,0.42), 0 0.35rem 0 rgba(90,10,18,0.12);
+  pointer-events: none;
+}
+
+.zaeb-glasses-word-field {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  width: min(96vw, 100rem);
+  justify-content: center;
+  gap: clamp(0.45rem, 1.5vw, 1.8rem);
+  flex-wrap: wrap;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.zaeb-know-word {
+  font-family: var(--font-mono, monospace);
+  font-size: clamp(1rem, 2.25vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.zaeb-know-word-red { color: #5a0a12; }
+.zaeb-know-word-black { color: #0a0303; }
+
+.zaeb-glasses-streams {
+  z-index: 1;
+  opacity: 0.22;
+}
+
+.zaeb-glasses-overlap-shell {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: block;
+  width: 100%;
+  min-height: 0;
+  transform-origin: 50% 72%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.zaeb-glasses-object {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw !important;
+  max-width: none !important;
+  transform: translate(-50%, -50%);
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  font-size: clamp(0.72rem, 1.25vw, 1.08rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.065em;
+}
+
+/* Remove the Y2K border overlay and return the reflection to neutral silver/white. */
+.zaeb-glasses-y2k-gloss { display: none !important; }
+.zaeb-glasses-sheen {
+  background: linear-gradient(115deg, transparent 15%, rgba(255,255,255,0.08) 32%, rgba(245,245,240,0.76) 49%, rgba(198,203,210,0.48) 56%, rgba(255,255,255,0.14) 68%, transparent 82%) !important;
+  mix-blend-mode: soft-light;
+  animation-duration: 8s;
+}
+.zaeb-glasses-reference-frame {
+  filter: drop-shadow(0 1.2rem 2.4rem rgba(10,3,3,0.28)) brightness(0.92) contrast(1.08) saturate(0.55) grayscale(0.2) !important;
+}
+
+@media (max-width: 860px) {
+  .zaeb-glasses-know-title { top: 3rem; font-size: clamp(2.5rem, 10vw, 5rem); }
+  .zaeb-glasses-word-field { top: 36%; width: 94vw; }
+  .zaeb-glasses-object { width: 112vw !important; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-know-title { top: 2.6rem; font-size: clamp(2rem, 11vw, 3.5rem); }
+  .zaeb-glasses-word-field { top: 35%; gap: 0.42rem 0.7rem; }
+  .zaeb-know-word { font-size: 0.82rem; }
+  .zaeb-glasses-object { width: 128vw !important; }
+}
+
+
+/* glasses-type-correction-v1: centered title and contained readable lens typography. */
+.zaeb-glasses-know-title {
+  left: 0;
+  width: 100%;
+  padding-inline: 2vw;
+  box-sizing: border-box;
+  font-size: clamp(2.6rem, 6.2vw, 7.4rem);
+  letter-spacing: -0.07em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  transform: none;
+}
+
+.zaeb-glasses-word-field {
+  left: 0;
+  width: 100%;
+  padding-inline: clamp(1rem, 4vw, 4rem);
+  box-sizing: border-box;
+  transform: none;
+  overflow: hidden;
+}
+
+.zaeb-know-word {
+  font-size: clamp(0.88rem, 1.55vw, 1.55rem);
+  letter-spacing: 0.055em;
+  line-height: 1.15;
+}
+
+.zaeb-glasses-lens-text {
+  overflow: hidden;
+}
+
+.zaeb-glasses-lens-track {
+  width: 112%;
+  margin-left: -6%;
+  gap: clamp(1rem, 1.8vw, 1.7rem);
+  transform: scale(1.02);
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  max-width: none;
+  overflow: visible;
+  font-size: clamp(0.58rem, 0.92vw, 0.88rem) !important;
+  line-height: 1.16;
+  letter-spacing: 0.045em;
+  white-space: nowrap;
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight strong {
+  display: inline-block;
+  white-space: nowrap;
+  font-weight: 900 !important;
+}
+
+.zaeb-glasses-caption-line {
+  left: 4%;
+  right: 4%;
+  font-size: clamp(0.46rem, 0.62vw, 0.62rem);
+}
+
+@media (max-width: 860px) {
+  .zaeb-glasses-know-title {
+    font-size: clamp(2.25rem, 8vw, 5.2rem);
+    padding-inline: 1rem;
+  }
+  .zaeb-know-word { font-size: clamp(0.78rem, 2.2vw, 1.1rem); }
+  .zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight { font-size: 0.62rem !important; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-know-title {
+    font-size: clamp(1.9rem, 9.2vw, 3.4rem);
+    letter-spacing: -0.06em;
+  }
+  .zaeb-glasses-word-field { padding-inline: 0.8rem; gap: 0.35rem 0.6rem; }
+  .zaeb-know-word { font-size: 0.72rem; }
+  .zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight { font-size: 0.54rem !important; }
+}
+
+
+/* glasses-lens-motion-fix-v1: preserve track width and make scroll transforms visible. */
+.zaeb-glasses-lens-track {
+  display: flex !important;
+  width: 100% !important;
+  overflow: visible;
+  transform: scale(1.02);
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  display: block;
+  flex: 0 0 auto;
+  width: max-content;
+  max-width: none;
+  position: relative;
+  will-change: transform;
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight strong {
+  display: inline-block;
+  width: max-content;
+  max-width: none;
+  white-space: nowrap;
+}
+
+
+/* glasses-motion-polish-v2: calmer track travel and tighter typography alignment. */
+.zaeb-glasses-know-title {
+  top: clamp(3.25rem, 8vh, 6rem);
+  font-size: clamp(2.5rem, 5.8vw, 6.8rem);
+  letter-spacing: -0.062em;
+  line-height: 0.92;
+  text-shadow: 0 0.1rem 0 rgba(255,255,255,0.48), 0 0.28rem 0 rgba(90,10,18,0.1);
+}
+
+.zaeb-glasses-word-field {
+  top: 37%;
+  max-width: 92rem;
+  padding-inline: clamp(1.5rem, 5vw, 6rem);
+  gap: clamp(0.55rem, 1.3vw, 1.5rem);
+}
+
+.zaeb-know-word {
+  font-size: clamp(0.82rem, 1.4vw, 1.4rem);
+  letter-spacing: 0.045em;
+}
+
+.zaeb-glasses-streams {
+  top: 49%;
+  bottom: auto;
+  height: 25%;
+  justify-content: center;
+  gap: clamp(1.15rem, 2.2vh, 2rem);
+  opacity: 0.18;
+  transform: translateY(-50%);
+}
+
+.zaeb-glasses-stream {
+  font-size: clamp(0.62rem, 0.95vw, 0.88rem);
+  letter-spacing: 0.105em;
+  line-height: 1.2;
+}
+
+.zaeb-glasses-lens-track {
+  gap: clamp(1rem, 1.6vw, 1.5rem);
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  font-size: clamp(0.56rem, 0.84vw, 0.82rem) !important;
+  letter-spacing: 0.04em;
+  line-height: 1.12;
+}
+
+@media (max-width: 860px) {
+  .zaeb-glasses-know-title { top: 3.2rem; font-size: clamp(2.2rem, 7vw, 4.8rem); }
+  .zaeb-glasses-word-field { top: 36%; padding-inline: 1.2rem; }
+  .zaeb-glasses-streams { top: 50%; height: 23%; gap: 1.1rem; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-know-title { top: 2.8rem; font-size: clamp(1.8rem, 8.6vw, 3.2rem); }
+  .zaeb-glasses-word-field { top: 35%; padding-inline: 0.75rem; gap: 0.35rem 0.55rem; }
+  .zaeb-know-word { font-size: 0.68rem; }
+  .zaeb-glasses-streams { top: 50%; height: 22%; gap: 0.85rem; }
+  .zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight { font-size: 0.5rem !important; }
+}
+
+
+/* glasses-interactive-transition-v1: hover glitch frame and smooth handoff to About. */
+.zaeb-glasses-object {
+  outline: none;
+  transition: filter 260ms ease, transform 420ms cubic-bezier(.22,.8,.22,1);
+}
+
+.zaeb-glasses-object:hover,
+.zaeb-glasses-object:focus-visible {
+  filter: saturate(1.2) contrast(1.08) drop-shadow(0 0 1.6rem rgba(90,10,18,0.26));
+}
+
+.zaeb-glasses-object:hover .zaeb-glasses-reference-frame,
+.zaeb-glasses-object:focus-visible .zaeb-glasses-reference-frame {
+  filter: drop-shadow(0 1.2rem 2.4rem rgba(10,3,3,0.32)) brightness(1.02) contrast(1.18) saturate(1.3) hue-rotate(-9deg) !important;
+  animation: zaeb-frame-glitch 680ms steps(2, end) infinite;
+}
+
+.zaeb-glasses-object:hover .zaeb-glasses-lens-pane,
+.zaeb-glasses-object:focus-visible .zaeb-glasses-lens-pane {
+  border-color: rgba(90,10,18,0.9) !important;
+  box-shadow: 0 0 1.7rem rgba(90,10,18,0.28), inset 0 0 1.25rem rgba(255,255,255,0.62) !important;
+}
+
+.zaeb-glasses-object::after {
+  position: absolute;
+  inset: 4% 3% 17%;
+  z-index: 6;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid rgba(90,10,18,0.3);
+  mix-blend-mode: multiply;
+}
+
+.zaeb-glasses-object:hover::after,
+.zaeb-glasses-object:focus-visible::after {
+  opacity: 0.72;
+  animation: zaeb-frame-scan 760ms steps(3, end) infinite;
+}
+
+@keyframes zaeb-frame-glitch {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(1px, -1px); }
+  50% { transform: translate(-1px, 1px); }
+  75% { transform: translate(1px, 0); }
+}
+
+@keyframes zaeb-frame-scan {
+  0% { clip-path: inset(0 0 88% 0); }
+  50% { clip-path: inset(42% 0 42% 0); }
+  100% { clip-path: inset(88% 0 0 0); }
+}
+
+.zaeb-glasses-gap + .zaeb-about {
+  position: relative;
+  margin-top: 0;
+  padding-top: clamp(7rem, 14vh, 10rem) !important;
+  scroll-margin-top: 0;
+  border-top: 0 !important;
+  background: linear-gradient(180deg, #d5c5ba 0%, #21161d 13%, #030304 34%) !important;
+}
+
+.zaeb-glasses-gap + .zaeb-about::before {
+  display: none !important;
+}
+
+.zaeb-glasses-gap + .zaeb-about::after {
+  display: block !important;
+  top: 0;
+  height: 18rem;
+  z-index: 0;
+  opacity: 0.9;
+  background: linear-gradient(180deg, rgba(213,197,186,0.94), rgba(74,20,32,0.32) 22%, rgba(3,3,4,0) 76%) !important;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zaeb-glasses-object:hover .zaeb-glasses-reference-frame,
+  .zaeb-glasses-object:focus-visible .zaeb-glasses-reference-frame,
+  .zaeb-glasses-object:hover::after,
+  .zaeb-glasses-object:focus-visible::after { animation: none; }
+}
+
+
+/* Remove the pre-frame word layer cleanly before lens swipes take over. */
+.zaeb-glasses-word-field {
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+
+.zaeb-glasses-object {
+  z-index: 5;
+}
+
+.zaeb-glasses-lens-text {
+  z-index: 6;
+}
+
+
+/* glasses-restore-geometry-v1: restore compact centered frame and remove stray pre-frame words. */
+.zaeb-glasses-word-field {
+  display: none !important;
+}
+
+.zaeb-glasses-object {
+  top: 50%;
+  left: 50%;
+  width: min(90vw, 50rem) !important;
+  max-width: 50rem !important;
+  transform: translate(-50%, -50%);
+}
+
+.zaeb-glasses-lens-text {
+  inset: 0;
+}
+
+.zaeb-glasses-lens-pane {
+  top: 19%;
+  bottom: 24%;
+  width: 27.5%;
+}
+
+.zaeb-glasses-lens-pane-left { left: 18.6%; }
+.zaeb-glasses-lens-pane-right { left: 56.8%; }
+
+@media (max-width: 860px) {
+  .zaeb-glasses-object {
+    width: min(94vw, 36rem) !important;
+    max-width: 36rem !important;
+  }
+  .zaeb-glasses-lens-pane { width: 29.5%; }
+  .zaeb-glasses-lens-pane-left { left: 15%; }
+  .zaeb-glasses-lens-pane-right { left: 55.5%; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-object {
+    width: 95vw !important;
+    max-width: none !important;
+  }
+}
+
+
+/* glasses-restore-full-width-v2: return the wide frame and original proportional lens geometry. */
+.zaeb-glasses-object {
+  width: 100vw !important;
+  max-width: none !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.zaeb-glasses-lens-pane {
+  top: 19%;
+  bottom: 24%;
+  width: 27.5%;
+  border-radius: 58% 57% 42% 56% / 44% 48% 48% 49%;
+}
+
+.zaeb-glasses-lens-pane-left { left: 18.6%; }
+.zaeb-glasses-lens-pane-right { left: 56.8%; }
+
+/* Keep only the requested removal of the stray word line above the lenses. */
+.zaeb-glasses-word-field { display: none !important; }
+
+@media (max-width: 860px) {
+  .zaeb-glasses-object {
+    width: 112vw !important;
+    max-width: none !important;
+  }
+  .zaeb-glasses-lens-pane { width: 29.5%; }
+  .zaeb-glasses-lens-pane-left { left: 15%; }
+  .zaeb-glasses-lens-pane-right { left: 55.5%; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-object {
+    width: 128vw !important;
+    max-width: none !important;
+  }
+}
+
+
+/* glasses-typography-lens-shape-v2: modest type increase and smoother frame-aligned lens ovals. */
+.zaeb-glasses-know-title {
+  font-size: clamp(2.7rem, 6.2vw, 7.2rem);
+  letter-spacing: -0.065em;
+  color: #0a0303;
+  text-shadow: 0 0.1rem 0 rgba(255,255,255,0.52), 0 0.3rem 0 rgba(90,10,18,0.14);
+}
+
+.zaeb-glasses-lens-pane {
+  top: 17.5%;
+  bottom: 20.5%;
+  width: 27.5%;
+  border-radius: 50% 50% 46% 48% / 43% 45% 52% 55%;
+}
+
+.zaeb-glasses-lens-pane-left { left: 18.65%; }
+.zaeb-glasses-lens-pane-right { left: 56.85%; }
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  font-size: clamp(0.6rem, 0.9vw, 0.86rem) !important;
+}
+
+@media (max-width: 860px) {
+  .zaeb-glasses-know-title { font-size: clamp(2.35rem, 7.35vw, 5.1rem); }
+  .zaeb-glasses-lens-pane {
+    top: 17%;
+    bottom: 20%;
+    width: 29.5%;
+  }
+  .zaeb-glasses-lens-pane-left { left: 15%; }
+  .zaeb-glasses-lens-pane-right { left: 55.5%; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-know-title { font-size: clamp(2rem, 8.9vw, 3.5rem); }
+  .zaeb-glasses-lens-pane { top: 16.5%; bottom: 19.5%; }
+}
+
+
+/* glasses-performance-fit-v1: compositor hints and inset lens geometry. */
+.zaeb-glasses-stage,
+.zaeb-glasses-overlap-shell,
+.zaeb-glasses-object {
+  contain: layout paint;
+}
+
+.zaeb-glasses-overlap-shell,
+.zaeb-glasses-object,
+.zaeb-glasses-lens-pane,
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  will-change: transform;
+}
+
+.zaeb-glasses-lens-pane {
+  top: 18.2%;
+  bottom: 21.5%;
+  width: 26.5%;
+  border-radius: 50% 50% 46% 48% / 43% 45% 52% 55%;
+}
+
+.zaeb-glasses-lens-pane-left { left: 18.9%; }
+.zaeb-glasses-lens-pane-right { left: 56.9%; }
+
+@media (max-width: 860px) {
+  .zaeb-glasses-lens-pane {
+    top: 17.7%;
+    bottom: 21%;
+    width: 28.5%;
+  }
+  .zaeb-glasses-lens-pane-left { left: 15.7%; }
+  .zaeb-glasses-lens-pane-right { left: 55.8%; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-lens-pane { top: 17.2%; bottom: 20.5%; }
+}
+
+
+/* lens-geometry-only-revert-v1: restore prior pane shape and placement; preserve all other changes. */
+.zaeb-glasses-lens-pane {
+  top: 19%;
+  bottom: 24%;
+  width: 27.5%;
+  border-radius: 58% 57% 42% 56% / 44% 48% 48% 49%;
+}
+
+.zaeb-glasses-lens-pane-left { left: 18.6%; }
+.zaeb-glasses-lens-pane-right { left: 56.8%; }
+
+@media (max-width: 860px) {
+  .zaeb-glasses-lens-pane {
+    top: 19%;
+    bottom: 24%;
+    width: 29.5%;
+  }
+  .zaeb-glasses-lens-pane-left { left: 15%; }
+  .zaeb-glasses-lens-pane-right { left: 55.5%; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-lens-pane {
+    top: 19%;
+    bottom: 24%;
+    width: 29.5%;
+  }
+}
+
+
+/* glasses-frame-mask-v1: frame sits above lens content and hides harsh pane edges. */
+.zaeb-glasses-lens-text {
+  z-index: 2 !important;
+}
+
+.zaeb-glasses-reference-frame {
+  position: absolute;
+  z-index: 10 !important;
+  mix-blend-mode: normal;
+  pointer-events: none;
+}
+
+.zaeb-glasses-lens-pane {
+  border-color: rgba(90, 10, 18, 0.16) !important;
+  box-shadow:
+    inset 0 0 1.25rem rgba(255, 255, 255, 0.48),
+    inset 0 -0.35rem 0.8rem rgba(90, 10, 18, 0.08) !important;
+}
+
+.zaeb-glasses-lens-pane .zaeb-lens-radial-glare {
+  z-index: 1;
+}
+
+
+/* glasses-transition-polish-v2: title priority, larger lens type, softer frame blend. */
+.zaeb-glasses-know-title {
+  z-index: 20 !important;
+  top: clamp(3rem, 7.5vh, 5.5rem);
+  font-size: clamp(2.8rem, 6.35vw, 7.35rem);
+  letter-spacing: -0.068em;
+  text-shadow: 0 0.08rem 0 rgba(255,255,255,0.58), 0 0.22rem 0 rgba(90,10,18,0.1);
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  font-size: clamp(0.67rem, 0.98vw, 0.96rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.1;
+  letter-spacing: 0.035em;
+}
+
+.zaeb-glasses-lens-pane {
+  mix-blend-mode: normal;
+  box-shadow:
+    inset 0 0 1rem rgba(255,255,255,0.34),
+    inset 0 -0.3rem 0.7rem rgba(90,10,18,0.055) !important;
+}
+
+.zaeb-glasses-reference-frame {
+  z-index: 10 !important;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 0.85rem 1.7rem rgba(10,3,3,0.16)) brightness(0.96) contrast(1.05) saturate(0.5) grayscale(0.16) !important;
+}
+
+.zaeb-glasses-object {
+  filter: drop-shadow(0 0.8rem 1.6rem rgba(10,3,3,0.1));
+}
+
+.zaeb-glasses-object:hover,
+.zaeb-glasses-object:focus-visible {
+  filter: saturate(1.1) contrast(1.04) drop-shadow(0 0 1.2rem rgba(90,10,18,0.18));
+}
+
+@media (max-width: 860px) {
+  .zaeb-glasses-know-title { top: 3rem; font-size: clamp(2.45rem, 7.5vw, 5.3rem); }
+  .zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight { font-size: 0.68rem !important; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-know-title { top: 2.7rem; font-size: clamp(2.05rem, 9vw, 3.55rem); }
+  .zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight { font-size: 0.56rem !important; }
+}
+
+
+/* glasses-line-hover-polish-v1: bold scrolling lens lines and controlled frame response. */
+.zaeb-glasses-lens-track {
+  gap: clamp(0.85rem, 1.35vw, 1.35rem);
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  font-size: clamp(0.72rem, 1.02vw, 1rem) !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.028em;
+  line-height: 1.08;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight strong {
+  font-weight: 950 !important;
+  text-shadow: 0 0 0.18rem rgba(255,255,255,0.28);
+}
+
+.zaeb-glasses-lens-pane .zaeb-lens-word-red {
+  text-shadow: 0 0 0.24rem rgba(90,10,18,0.24) !important;
+}
+
+.zaeb-glasses-lens-pane .zaeb-lens-word-black {
+  text-shadow: 0 0 0.12rem rgba(255,255,255,0.26) !important;
+}
+
+.zaeb-glasses-object {
+  transition: filter 280ms ease, transform 420ms cubic-bezier(.22,.8,.22,1);
+}
+
+.zaeb-glasses-object:hover,
+.zaeb-glasses-object:focus-visible {
+  filter: saturate(1.14) contrast(1.045) drop-shadow(0 0 1.35rem rgba(90,10,18,0.2));
+}
+
+.zaeb-glasses-object:hover .zaeb-glasses-reference-frame,
+.zaeb-glasses-object:focus-visible .zaeb-glasses-reference-frame {
+  filter: drop-shadow(0 0.9rem 1.8rem rgba(10,3,3,0.2)) brightness(1.01) contrast(1.1) saturate(0.72) grayscale(0.08) !important;
+  animation: zaeb-frame-glitch 1.2s steps(3, end) infinite;
+}
+
+.zaeb-glasses-object:hover .zaeb-glasses-lens-pane,
+.zaeb-glasses-object:focus-visible .zaeb-glasses-lens-pane {
+  border-color: rgba(90,10,18,0.34) !important;
+  box-shadow: inset 0 0 1.15rem rgba(255,255,255,0.42), 0 0 1rem rgba(90,10,18,0.12) !important;
+}
+
+.zaeb-glasses-object:hover .zaeb-glasses-sheen,
+.zaeb-glasses-object:focus-visible .zaeb-glasses-sheen {
+  opacity: 0.78;
+  animation-duration: 5.8s;
+}
+
+@media (max-width: 860px) {
+  .zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight { font-size: 0.74rem !important; }
+}
+
+@media (max-width: 520px) {
+  .zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight { font-size: 0.6rem !important; }
+}
+
+
+/* revert-latest-lens-hover-v1: restore the previous line weight and frame interaction only. */
+.zaeb-glasses-lens-track {
+  gap: clamp(1rem, 1.35vw, 1.5rem);
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight {
+  font-size: clamp(0.67rem, 0.98vw, 0.96rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.035em;
+  line-height: 1.1;
+  text-rendering: auto;
+}
+
+.zaeb-glasses-lens-pane .zaeb-glasses-stream.zaeb-lens-highlight strong {
+  font-weight: 900 !important;
+  text-shadow: 0 0 0.3rem rgba(255,255,255,0.5) !important;
+}
+
+.zaeb-glasses-object:hover,
+.zaeb-glasses-object:focus-visible {
+  filter: saturate(1.1) contrast(1.04) drop-shadow(0 0 1.2rem rgba(90,10,18,0.18));
+}
+
+.zaeb-glasses-object:hover .zaeb-glasses-reference-frame,
+.zaeb-glasses-object:focus-visible .zaeb-glasses-reference-frame {
+  filter: drop-shadow(0 1.2rem 2.4rem rgba(10,3,3,0.32)) brightness(1.02) contrast(1.1) saturate(0.72) grayscale(0.08) !important;
+  animation: zaeb-frame-glitch 1.2s steps(3, end) infinite;
+}
+
+.zaeb-glasses-object:hover .zaeb-glasses-lens-pane,
+.zaeb-glasses-object:focus-visible .zaeb-glasses-lens-pane {
+  border-color: rgba(90,10,18,0.34) !important;
+  box-shadow: inset 0 0 1.15rem rgba(255,255,255,0.42), 0 0 1rem rgba(90,10,18,0.12) !important;
+}
+
+.zaeb-glasses-object:hover .zaeb-glasses-sheen,
+.zaeb-glasses-object:focus-visible .zaeb-glasses-sheen {
+  opacity: 1;
+  animation-duration: 8s;
+}
+
+/* about-scroll-blend-v1: soft color bridge from the ivory Glasses surface into About. */
+.zaeb-glasses-gap {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.zaeb-glasses-gap::after {
+  display: block !important;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 12;
+  height: clamp(8rem, 18vh, 15rem);
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(213,197,186,0) 0%, rgba(74,20,32,0.18) 38%, rgba(33,22,29,0.62) 76%, #030304 100%);
+  mix-blend-mode: multiply;
+}
+
+.zaeb-glasses-gap + .zaeb-about {
+  position: relative;
+  z-index: 2;
+  margin-top: -1px;
+  padding-top: clamp(8rem, 16vh, 12rem) !important;
+  background: linear-gradient(180deg, #030304 0%, #21161d 16%, #030304 38%) !important;
+}
+
+.zaeb-glasses-gap + .zaeb-about::after {
+  top: 0;
+  height: clamp(10rem, 22vh, 18rem);
+  opacity: 0.78;
+  background: linear-gradient(180deg, rgba(213,197,186,0.58) 0%, rgba(74,20,32,0.28) 28%, rgba(3,3,4,0) 82%) !important;
+  mix-blend-mode: screen;
+}
+
+
+/* clean-title-frame-stack-v1: no burgundy overlay behind title; lens edges stay behind frame. */
+.zaeb-glasses-gap::after,
+.zaeb-glasses-gap + .zaeb-about::after {
+  display: none !important;
+}
+
+.zaeb-glasses-gap + .zaeb-about {
+  background: #030304 !important;
+  padding-top: clamp(7rem, 14vh, 10rem) !important;
+}
+
+.zaeb-glasses-lens-text {
+  z-index: 2 !important;
+}
+
+.zaeb-glasses-reference-frame {
+  z-index: 12 !important;
+}
+
+.zaeb-glasses-lens-pane {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.zaeb-flip-fade {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.zaeb-flip-word {
+  display: inline-flex;
+  transform-style: preserve-3d;
+  white-space: nowrap;
+}
+
+.zaeb-flip-letter {
+  display: inline-block;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+}
+
+.zaeb-glasses-know-title .zaeb-flip-fade {
+  color: #0a0303;
+  max-width: 100%;
+}
+
+.zaeb-about-big-heading .zaeb-flip-fade {
+  display: inline-block;
+  max-width: 100%;
+}

@@ -1,0 +1,381 @@
+/* ─────────────────────────────────────────────────────────────────
+   Categorized 3D Glow Blocks — Upright Tactile Grid
+   • Upright 3D Blocks (Not laid down / Not flat angled)
+   • Rich Category Grid Boxes
+   • Ambient Lighten-Up & Neon Glow on Hover
+   ───────────────────────────────────────────────────────────────── */
+
+.cat-stack-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #110d13;
+  color: #f2ece2;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ── Top Filter Bar ── */
+.cat-filter-header {
+  padding: 1.2rem 1.6rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  border-bottom: 1px solid rgba(218, 198, 189, 0.12);
+  background: rgba(18, 14, 20, 0.95);
+  backdrop-filter: blur(12px);
+  z-index: 2;
+}
+
+.cat-filter-title {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #dac6bd;
+  text-transform: uppercase;
+}
+
+.cat-filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.cat-filter-pill {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  background: rgba(30, 24, 32, 0.6);
+  border: 1px solid rgba(218, 198, 189, 0.16);
+  color: #a89f91;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cat-filter-pill:hover {
+  border-color: rgba(224, 69, 95, 0.5);
+  color: #ffffff;
+  background: rgba(40, 32, 44, 0.8);
+}
+
+.cat-filter-pill.is-active {
+  background: #e0455f;
+  border-color: #e0455f;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(224, 69, 95, 0.35);
+}
+
+/* ── Scrollable Groups ── */
+.cat-groups-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(218, 198, 189, 0.2) transparent;
+}
+
+.cat-groups-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cat-groups-scroll::-webkit-scrollbar-thumb {
+  background: rgba(218, 198, 189, 0.2);
+  border-radius: 999px;
+}
+
+/* ── Category Group Card ── */
+.cat-group-card {
+  background: rgba(18, 14, 21, 0.75);
+  border: 1px solid rgba(218, 198, 189, 0.14);
+  border-radius: 14px;
+  padding: 1.2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.cat-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(218, 198, 189, 0.1);
+  padding-bottom: 0.7rem;
+}
+
+.cat-group-icon-wrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(224, 69, 95, 0.12);
+  border: 1px solid rgba(224, 69, 95, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cat-group-title {
+  font-family: var(--font-display-space, "Space Grotesk", sans-serif);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.cat-group-tag {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.55rem;
+  color: #dac6bd;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cat-group-count {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  color: #736b63;
+  letter-spacing: 0.1em;
+}
+
+/* ── Upright 3D Block Grid ── */
+.cat-blocks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.9rem;
+}
+
+/* Upright 3D Block Button */
+.cat-block-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+}
+
+.cat-block-surface {
+  position: relative;
+  width: 100%;
+  padding: 1.1rem 1rem;
+  border-radius: 12px;
+  background: #16121a;
+  border: 1.5px solid rgba(218, 198, 189, 0.14);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.85rem;
+  overflow: hidden;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  transition:
+    background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Micro Grid Lines Texture */
+.cat-block-grid-mesh {
+  position: absolute;
+  inset: 0;
+  background-size: 10px 10px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+/* Top Row: Icon + Arrow */
+.cat-block-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.cat-icon-container {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cat-icon-svg {
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+
+.cat-img-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+
+.cat-ts-badge {
+  width: 30px;
+  height: 30px;
+  background: #3178C6;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display-space, "Space Grotesk", sans-serif);
+  font-weight: 900;
+  font-size: 0.95rem;
+  color: #ffffff;
+  letter-spacing: -0.05em;
+  box-shadow: 0 2px 8px rgba(49, 120, 198, 0.4);
+}
+
+.cat-r3f-badge {
+  width: 32px;
+  height: 28px;
+  background: #e0455f;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono, monospace);
+  font-weight: 800;
+  font-size: 0.65rem;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.cat-gsap-text {
+  font-family: var(--font-display-space, "Space Grotesk", sans-serif);
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: #88CE02;
+  letter-spacing: -0.04em;
+  text-shadow: 0 0 8px rgba(136, 206, 2, 0.4);
+}
+
+.cat-motion-badge {
+  width: 32px;
+  height: 32px;
+  background: #FFE600;
+  color: #000000;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(255, 230, 0, 0.3);
+}
+
+.cat-arrow-indicator {
+  color: #736b63;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+/* Block Metadata */
+.cat-block-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  position: relative;
+  z-index: 2;
+}
+
+.cat-block-name {
+  font-family: var(--font-display-space, "Space Grotesk", sans-serif);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.cat-block-role {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.58rem;
+  color: #a89f91;
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* ── Lighten-Up & Glowing Hover State ── */
+.cat-block-btn:hover .cat-block-surface {
+  background: #251d29;
+  border-color: var(--block-accent);
+  box-shadow:
+    0 8px 24px var(--block-glow),
+    inset 0 0 16px var(--block-glow),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35);
+}
+
+.cat-block-btn:hover .cat-block-grid-mesh {
+  opacity: 1;
+}
+
+.cat-block-btn:hover .cat-arrow-indicator {
+  color: var(--block-accent);
+  transform: translate(2px, -2px);
+}
+
+.cat-block-btn:hover .cat-block-role {
+  color: #dac6bd;
+}
+
+/* Specular Glare Glow Aura */
+.cat-block-glow-aura {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--block-glow) 0%, transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.cat-block-btn:hover .cat-block-glow-aura {
+  opacity: 0.35;
+}
+
+/* ── Bottom Bar ── */
+.cat-bottom-bar {
+  padding: 0.8rem 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(218, 198, 189, 0.12);
+  background: rgba(14, 11, 16, 0.95);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .cat-blocks-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.65rem;
+  }
+  .cat-block-surface {
+    padding: 0.85rem 0.8rem;
+  }
+  .cat-block-name {
+    font-size: 0.8rem;
+  }
+  .cat-filter-pills {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+  }
+}

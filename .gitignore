@@ -1,0 +1,26 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+.edge-temp-profile/
+.preview-chrome/
+3d-metallic-red-z (1)/
+daoism_clone/
+daoismsystem_clone/
+new game/
+
+# Exclude non-essential files
+src/assets/images/*.docx
+src/assets/images/*.txt
+src/assets/images/*.yml
+src/assets/images/README*.md
+src/assets/images/Scooty*.txt
+src/assets/images/snake.yml
+
+# Keep only .gitkeep files in directories
+!**/.gitkeep
+

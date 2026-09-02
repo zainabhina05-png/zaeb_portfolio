@@ -1,0 +1,103 @@
+@keyframes game-entry-shard-burst {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(0deg) scale(0.15); }
+  16% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(calc((var(--shard) - 9) * 9vw), calc((var(--shard) % 4 - 2) * 15vh), 0) rotate(calc((var(--shard) - 9) * 23deg)) scale(1.1); }
+}
+
+@keyframes game-entry-flash {
+  0%, 100% { opacity: 0; }
+  42% { opacity: 0.9; }
+  65% { opacity: 0.24; }
+}
+
+@keyframes game-entry-black-drop {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(120%); }
+}
+
+@keyframes game-entry-label {
+  0%, 52% { opacity: 0; transform: translateY(5px); }
+  72% { opacity: 0.72; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-4px); }
+}
+
+.game-entry-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--color-brand-bg);
+}
+
+.game-entry-shards {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.game-entry-shards i {
+  position: absolute;
+  width: clamp(0.8rem, 2.3vw, 2.2rem);
+  height: clamp(1.3rem, 4.5vw, 4.2rem);
+  clip-path: polygon(49% 0, 100% 38%, 64% 100%, 0 71%, 12% 20%);
+  opacity: 0;
+  background: linear-gradient(145deg, var(--color-brand-cream), var(--color-brand-brass));
+  animation: game-entry-shard-burst 620ms var(--ease-v3-reveal) calc(var(--shard) * 18ms) both;
+}
+
+.game-entry-shards i:nth-child(3n) { background: var(--color-brand-brass-hot); }
+.game-entry-shards i:nth-child(4n) { background: var(--color-brand-cream); }
+
+.game-entry-flash {
+  position: absolute;
+  inset: 0;
+  background: var(--color-brand-cream);
+  opacity: 0;
+}
+
+.game-entry-flash { animation: game-entry-flash 360ms var(--ease-v3-micro) 480ms both; }
+
+.game-entry-drop {
+  position: absolute;
+  inset: -2px 0 0;
+  background: var(--color-brand-bg);
+}
+
+.game-entry-drop::after {
+  position: absolute;
+  top: -2rem;
+  right: -6%;
+  left: -6%;
+  height: 3.5rem;
+  border-radius: 0 0 46% 46%;
+  background: var(--color-brand-bg);
+  content: "";
+}
+
+.game-entry-drop { animation: game-entry-black-drop 620ms var(--ease-v3-reveal) 700ms both; }
+
+.game-entry-label {
+  position: absolute;
+  bottom: 2.25rem;
+  left: 50%;
+  color: var(--color-brand-brass-hot);
+  font-family: var(--font-mono), "JetBrains Mono", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  animation: game-entry-label 760ms var(--ease-v3-reveal) 260ms both;
+}
+
+.game-entry-transition.reduced-motion {
+  animation: game-entry-flash 420ms ease-out both;
+}
+
+.game-entry-transition.reduced-motion .game-entry-shards,
+.game-entry-transition.reduced-motion .game-entry-label { display: none; }
+
+.game-entry-transition.reduced-motion .game-entry-drop {
+  animation: game-entry-black-drop 420ms ease-out both;
+}

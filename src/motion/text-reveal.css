@@ -1,0 +1,18 @@
+.text-reveal .char,
+.text-reveal .word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.text-reveal .word {
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-reveal .char,
+  .text-reveal .word {
+    will-change: auto;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
