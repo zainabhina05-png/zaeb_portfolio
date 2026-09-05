@@ -10,6 +10,7 @@ import CustomCursor from "./components/CustomCursor";
 import Hero from "./components/Hero";
 import GlassesScrollText from "./components/GlassesScrollText";
 import About from "./components/About";
+import CurtainBlinds from "./components/CurtainBlinds";
 import Experience from "./components/Experience";
 import WorkIndex from "./components/WorkIndex";
 import Education from "./components/Education";
@@ -47,31 +48,7 @@ export default function App() {
   }, [portfolioMode, setSmoothScrollPaused]);
 
   const [activeSection, setActiveSection] = useState("");
-  const [theme, setTheme] = useState<"light" | "dark" | null>(null);
   const [teleportSection, setTeleportSection] = useState<string | null>(null);
-
-  // Initialize theme from storage or media preference on mount
-  useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved === "light" || saved === "dark") {
-      setTheme(saved);
-    } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setTheme(prefersDark ? "dark" : "light");
-    }
-  }, []);
-
-  // Update DOM class and localStorage when theme changes
-  useEffect(() => {
-    if (!theme) return;
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   // Track the section nearest the reading line so the navbar active state follows scroll position.
   useEffect(() => {
@@ -118,10 +95,6 @@ export default function App() {
     setPortfolioMode("game");
   };
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
-
   return (
     <div className="relative min-h-screen bg-brand-bg text-brand-secondary overflow-x-clip selection:bg-brand-primary selection:text-brand-surface font-sans">
       {/* Background Interactive canvas overlay */}
@@ -137,8 +110,6 @@ export default function App() {
       {portfolioMode !== "game" && (
         <Navbar
           activeSection={activeSection}
-          theme={theme || "light"}
-          onToggleTheme={toggleTheme}
           onOpenPortal={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           portfolioMode={portfolioMode}
           onSetPortfolioMode={setPortfolioMode}
@@ -169,6 +140,8 @@ export default function App() {
           <>
             {/* 01. About section */}
             <About />
+
+            <CurtainBlinds label="NEXT / EXPERIENCE" />
 
             {/* 02. Experience section */}
             <Experience />

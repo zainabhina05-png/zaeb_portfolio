@@ -3,8 +3,6 @@ import { ArrowUpRight, Map, Menu, X } from "lucide-react";
 
 interface NavbarProps {
   activeSection: string;
-  theme?: "light" | "dark";
-  onToggleTheme?: () => void;
   onOpenPortal?: () => void;
   portfolioMode?: "game" | "scroll";
   onSetPortfolioMode?: (mode: "game" | "scroll") => void;

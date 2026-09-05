@@ -43,8 +43,6 @@ export default function InteractiveGrid() {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      const isDark = document.documentElement.classList.contains("dark");
-
       // Render a subtle, ambient horizontal/vertical gradient glow behind the grid
       if (mouseRef.current.active) {
         const gradient = ctx.createRadialGradient(
@@ -55,13 +53,8 @@ export default function InteractiveGrid() {
           mouseRef.current.y,
           300
         );
-        if (isDark) {
-          gradient.addColorStop(0, "rgba(138, 154, 134, 0.08)");
-          gradient.addColorStop(1, "rgba(17, 22, 16, 0)");
-        } else {
-          gradient.addColorStop(0, "rgba(92, 111, 68, 0.08)");
-          gradient.addColorStop(1, "rgba(252, 250, 242, 0)");
-        }
+        gradient.addColorStop(0, "rgba(92, 111, 68, 0.08)");
+        gradient.addColorStop(1, "rgba(252, 250, 242, 0)");
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, width, height);
       }
@@ -99,11 +92,7 @@ export default function InteractiveGrid() {
           ctx.beginPath();
           ctx.arc(drawX, drawY, rAccent, 0, Math.PI * 2);
           
-          if (isDark) {
-            ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-          } else {
-            ctx.fillStyle = `rgba(45, 74, 43, ${alpha * 1.5})`;
-          }
+          ctx.fillStyle = `rgba(45, 74, 43, ${alpha * 1.5})`;
           ctx.fill();
         }
       }

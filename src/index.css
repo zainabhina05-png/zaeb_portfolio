@@ -81,20 +81,6 @@
   --color-brand-brass-hot: #e8b876;
 }
 
-:root.dark {
-  --color-brand-bg: #130a0c;
-  --color-brand-primary: var(--color-onyx-100);
-  --color-brand-secondary: #ffffff;
-  --color-brand-tertiary: #c8b4b8;
-  --color-brand-surface: #1d0a0e;
-  --color-brand-surface-light: #2e1016;
-  --color-brand-border: rgba(120, 30, 40, 0.38);
-  --color-brand-accent: #6b2126;
-  --color-brand-accent-mahogany: #581e14;
-  --color-brand-brass: #b8925a;
-  --color-brand-brass-hot: #e8b876;
-}
-
 @theme {
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
@@ -543,8 +529,7 @@
 }
 
 /* phase2-root-theme-engine: the themed section wrapper animates these three root values. */
-:root,
-:root.dark {
+:root {
   --bg: #130a0c;
   --fg: #e8e8e3;
   --accent: #b8925a;
