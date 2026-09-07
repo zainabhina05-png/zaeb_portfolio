@@ -10,7 +10,6 @@ import CustomCursor from "./components/CustomCursor";
 import Hero from "./components/Hero";
 import GlassesScrollText from "./components/GlassesScrollText";
 import About from "./components/About";
-import CurtainBlinds from "./components/CurtainBlinds";
 import Experience from "./components/Experience";
 import WorkIndex from "./components/WorkIndex";
 import Education from "./components/Education";
@@ -140,8 +139,6 @@ export default function App() {
           <>
             {/* 01. About section */}
             <About />
-
-            <CurtainBlinds label="NEXT / EXPERIENCE" />
 
             {/* 02. Experience section */}
             <Experience />
